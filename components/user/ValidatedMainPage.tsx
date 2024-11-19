@@ -1,49 +1,16 @@
 'use client'
 import {
-    Bird,
-    Book,
-    Bot,
-    Code2,
     CornerDownLeft,
-    LifeBuoy,
-    Mic,
-    Paperclip,
-    Rabbit,
-    Settings,
-    Settings2,
-    Share,
-    SquareTerminal,
-    SquareUser,
-    Triangle,
-    Turtle,
 } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-    Drawer,
-    DrawerContent,
-    DrawerDescription,
-    DrawerHeader,
-    DrawerTitle,
-    DrawerTrigger,
-} from "@/components/ui/drawer"
+
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+
 import { Textarea } from "@/components/ui/textarea"
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { TooltipProvider } from "@radix-ui/react-tooltip"
+
 
 import {
     Form,
@@ -58,9 +25,9 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { parseAndRemoveKeys, test1, test2 } from "@/lib/handleTransferData"
+import { handleEngagementNote, parseAndRemoveKeys, test1, test2 } from "@/lib/handleTransferData"
 import { useState } from "react"
-import { cn } from "@/lib/utils"
+// form schema for not engagement note
 const formSchema = z.object({
     engagementNote: z.string().min(2, {
         message: "Engagement note not valid",
@@ -70,6 +37,7 @@ const formSchema = z.object({
 })
 
 export function ValidatedMainPage() {
+    // default form for engagement 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -80,13 +48,14 @@ export function ValidatedMainPage() {
     })
     // case data will eventually be set to all the clinical patient info
     const [caseData, setCaseData] = useState<any>(null)
+    // General data pertains to all info that is not included in the original engagement note
     const [generalData, setGeneralData] = useState({
         patientName: "",
         rnCaseManager: ""
     })
-    const [oneTouchTemplate, setOneTouchTemplate] = useState("")
-    const [timeoutTemplate, setTimeoutTemplate] = useState("")
+    // Once engagement note + patient name + RN name form is filled, we can auto generate the data for one touch + timeout
     function onEngagementNoteSubmit(values: z.infer<typeof formSchema>) {
+        const dummyEngagementNote = handleEngagementNote(values)
         // this function parses all the tx info into an object with all patient clinical info
         const csData = parseAndRemoveKeys(values)
         setCaseData(csData)

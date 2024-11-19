@@ -69,6 +69,7 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -225,8 +226,10 @@ export default function RootLayout({
           <div className="flex flex-col">
 
             {children}
+            <Toaster richColors position="bottom-left" />
           </div>
         </div>
+
       </body>
     </html>
   );

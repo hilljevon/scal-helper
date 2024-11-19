@@ -54,6 +54,7 @@ interface CaseDataInterface {
     rnName: string,
     engagementNote: string
 }
+// This function currently goes through the engagement note and parses according to location. However, not all engagement notes are left in the same order so needs to be updated
 export function parseAndRemoveKeys(caseData: CaseDataInterface) {
     const indexedPatientDataArray = [];
     // Split the input string by colons
@@ -73,12 +74,34 @@ export function parseAndRemoveKeys(caseData: CaseDataInterface) {
     for (let i = 0; i < indexedPatientDataArray.length; i++) {
         patientDataObject[masterKeys[i]] = indexedPatientDataArray[i]
     }
-    console.log("My Patient Data here", patientDataObject)
     return patientDataObject
-    // const oneTouchTemplate = `One Touch Template \n  \n Name: ${caseData.patientName} \n Dx: ${patientDataObject["Transfer Dx"]}  \n IVF/Drips: ${patientDataObject["IVF/Drips"]} \n COVID status: ${patientDataObject["COVID status"]} \n Sitter/Restraints: ${patientDataObject["Sitter/Restraints"]} \n Iso: ${patientDataObject["Iso (Y/N)"]} \n Code Status: ${patientDataObject["Code status"]} \n Height: ${patientDataObject["Ht"]} \n Weight: ${patientDataObject["wt"]} \n Bed Lvl: ${patientDataObject["Bed Lv Req'd"]} \n \n UA: Jevon H \n RN: ${caseData.rnName} \n \n If you can accept the patient, please reply "Accept".
-    // `
-    // const timeout = `Timeout with ${caseData.rnName} on ${caseData.patientName} \n \n Going to Kaiser XXX Room XXX, Report XXX, Pickup at XXX. \n Transport Lv: ${patientDataObject["Transport Lv Req'd"]}, Equip Needed: ${patientDataObject["Equip needed"]} \n Dx: ${patientDataObject["Transfer Dx"]}, IVF/Drips: ${patientDataObject["IVF/Drips"]}, COVID status: ${patientDataObject["COVID status"]} \n Sitter/Restraints: ${patientDataObject["Sitter/Restraints"]}, Iso: ${patientDataObject["Iso (Y/N)"]}, Code Status: ${patientDataObject["Code status"]} \n Leaving: XXX, ${patientDataObject["Current Bed Level"]} ${patientDataObject["Current RM"]}, Unit: ${patientDataObject["Unit phone#"]}
-    // `
-    // return { oneTouchTemplate, timeout }
-}
 
+}
+// Need to get more test engagement notes in order to test this function (CMA engagements, look through other CCR engagements)
+export function handleEngagementNote(caseData: CaseDataInterface) {
+    // in order to account for empty strings when the engagement note is not complete  ****
+    // whenever there is an empty string, the index of the new engagement note title entry is at index 0. example, if fax number is blank the following index (NKF MD Name) will begin at string index 0
+    const indexedPatientDataArray = [];
+    // Split the input string by colons
+    const parsed = caseData.engagementNote.split(/\s*:\s*/);
+    console.log("Parsed here", parsed)
+    // we need to place each found index since that will be the first half of the next string
+    const engagementNoteObject = {} as any
+    let placeholderObjectKey = parsed[0]
+    for (let i = 1; i < parsed.length; i++) {
+        const curr = parsed[i]
+        const match = keysToInclude.find(word => curr.includes(word))
+        // in the event that a match is found, that means we have to potentially split the string. we need to confirm where the match is located. due to extra entries in engagement notes, its important to include this match 
+        if (match) {
+            // this takes the index of our current iteration string that contains one of the titles for the engagement note
+            const index = curr.indexOf(match)
+            // with my current index, i need to split the string in half. the first half will be hashed with the previous key stored. the following will become the new key. 
+            const firstHalf = curr.slice(0, index)
+            const secondHalf = curr.slice(index)
+            engagementNoteObject[placeholderObjectKey] = firstHalf;
+            placeholderObjectKey = secondHalf;
+        }
+
+    }
+    console.log("Engagement Note Object", engagementNoteObject)
+}
