@@ -34,7 +34,7 @@ import { z } from "zod"
 import { handleEngagementNote, test2 } from "@/lib/handleTransferData"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
-import { HomeFacilities, HomeFacilityType } from "@/lib/data"
+import { facilities, FacilityType, HomeFacilities, HomeFacilityType } from "@/lib/data"
 type GeneralDataInterface = {
     patientName: string,
     rnCaseManager: string,
@@ -47,7 +47,8 @@ const formSchema = z.object({
     }),
     patientName: z.string(),
     rnName: z.string(),
-    facility: z.string()
+    homeFacility: z.string(),
+    nkf: z.string()
 })
 
 export function ValidatedMainPage() {
@@ -58,7 +59,8 @@ export function ValidatedMainPage() {
             engagementNote: test2,
             patientName: "",
             rnName: "",
-            facility: ""
+            homeFacility: "",
+            nkf: ""
         },
     })
     // case data will eventually be set to all the clinical patient info
@@ -68,11 +70,16 @@ export function ValidatedMainPage() {
         patientName: "",
         rnCaseManager: "",
     })
+    // THIS IS THE HOME FACILITY
     const [currentFacility, setCurrentFacility] = useState<HomeFacilityType | null>(null)
+    // this is the facility the patient is currently at
+    const [nkf, setNkf] = useState<FacilityType | null>(null)
     // Once engagement note + patient name + RN name form is filled, we can auto generate the data for one touch + timeout
     function onEngagementNoteSubmit(values: z.infer<typeof formSchema>) {
+        console.log("Values here", values)
         const filteredEngagementNote = handleEngagementNote(values)
-        const matchedFacility = HomeFacilities.find(facility => facility.name == values.facility)
+        const matchedFacility = HomeFacilities.find(facility => facility.name == values.homeFacility)
+        const matchedNkf = facilities.find(nkf => nkf.name == values.nkf)
         setCaseData(filteredEngagementNote)
         setGeneralData({
             patientName: values.patientName,
@@ -81,9 +88,40 @@ export function ValidatedMainPage() {
         matchedFacility && (
             setCurrentFacility(matchedFacility)
         )
+        matchedNkf && (
+            setNkf(matchedNkf)
+        )
     }
     return (
         <>
+            <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
+                <h1 className="text-xl font-semibold">Transfer tool</h1>
+                <div className='flex mx-auto'>
+                    <div className="relative hidden flex-col items-start gap-8 md:flex">
+                        <div className="grid w-full items-start gap-6">
+                            <div className="grid gap-6 rounded-lg p-2">
+                                <div className="col-span-full font-bold">
+                                    {currentFacility && (
+                                        <Breadcrumb>
+                                            <BreadcrumbList>
+                                                <BreadcrumbItem>
+                                                    <BreadcrumbLink href="/"> <span className=" text-purple-500">BUC: </span> {currentFacility.buc} </BreadcrumbLink>
+                                                </BreadcrumbItem>
+                                                <BreadcrumbSeparator />
+                                                <BreadcrumbItem>
+                                                    <BreadcrumbLink href="/components"><span className="text-green-500">MOD: </span> {currentFacility.modName[0]}</BreadcrumbLink>
+                                                </BreadcrumbItem>
+                                                <BreadcrumbSeparator />
+                                            </BreadcrumbList>
+                                        </Breadcrumb>
+                                    )}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
             <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
                 <div
                     className="relative hidden flex-col items-start gap-8 md:flex" x-chunk="dashboard-03-chunk-0"
@@ -123,10 +161,10 @@ export function ValidatedMainPage() {
                                 <div className="col-span-full">
                                     <FormField
                                         control={form.control}
-                                        name="facility"
+                                        name="homeFacility"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Facility</FormLabel>
+                                                <FormLabel>Home Facility</FormLabel>
                                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                     <FormControl>
                                                         <SelectTrigger>
@@ -143,8 +181,30 @@ export function ValidatedMainPage() {
                                         )}
                                     />
                                 </div>
+                                <div className="col-span-full">
+                                    <FormField
+                                        control={form.control}
+                                        name="nkf"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>NKF</FormLabel>
+                                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                    <FormControl>
+                                                        <SelectTrigger>
+                                                            <SelectValue placeholder="Select a NKF" />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        {facilities.map((facility) => (
+                                                            <SelectItem value={facility.name} key={facility.name}> <span className="underline">{facility.name} </span> - {facility.address.substring(0, 28)} ... </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
                             </div>
-
                             <FormField
                                 control={form.control}
                                 name="engagementNote"
@@ -166,7 +226,6 @@ export function ValidatedMainPage() {
                                     </FormItem>
                                 )}
                             />
-
                             <Button type="submit" size="sm" className="ml-auto gap-1.5">
                                 Generate
                                 <CornerDownLeft className="size-3.5" />
@@ -174,29 +233,7 @@ export function ValidatedMainPage() {
                         </form>
                     </Form>
                 </div>
-                {/* <div className="relative hidden flex-col items-start gap-8 md:flex">
-                    <div className="grid w-full items-start gap-6">
-                        <div className="grid gap-6 rounded-lg border p-2">
-                            <div className="col-span-full">
-                                {currentFacility && (
-                                    <Breadcrumb>
-                                        <BreadcrumbList>
-                                            <BreadcrumbItem>
-                                                <BreadcrumbLink href="/"> <span className="font-bold">BUC: </span> {currentFacility.buc} </BreadcrumbLink>
-                                            </BreadcrumbItem>
-                                            <BreadcrumbSeparator />
-                                            <BreadcrumbItem>
-                                                <BreadcrumbLink href="/components"><span className="font-bold">MOD: </span> {currentFacility.modName[0]}</BreadcrumbLink>
-                                            </BreadcrumbItem>
-                                            <BreadcrumbSeparator />
-                                        </BreadcrumbList>
-                                    </Breadcrumb>
-                                )}
-                            </div>
 
-                        </div>
-                    </div>
-                </div> */}
                 <div className="relative  flex-col items-start gap-8 md:flex">
                     <form className="grid w-full items-start gap-6">
                         <fieldset className="grid gap-6 rounded-lg border p-2">
@@ -249,9 +286,10 @@ export function ValidatedMainPage() {
                                                 Sitter/Restraints: <span className="text-blue-600"> {caseData["Sitter/Restraints"]} </span>,
                                                 Iso: <span className="text-blue-600">{caseData["Iso (Y/N)"]} </span> ,
                                                 Code Status: <span className="text-blue-600"> {caseData["Code status"]} </span> <br />
-                                                Leaving: XXX,  <span className="text-blue-600">{caseData["Current Bed Level"]} </span>
-                                                <span className="text-blue-600">{caseData["Current RM"]} </span>,
-                                                Unit:  <span className="text-blue-600">{caseData["Unit phone#"]} </span>
+                                                Leaving: <span className="text-pink-600"> {nkf ? (<p className="inline-block">{nkf.name}</p>) : (<p className="inline-block">XXX</p>)} </span>,
+                                                <span className="text-pink-600">{caseData["Current Bed Level"]} </span>
+                                                <span className="text-pink-600">{caseData["Current RM"]} </span>,
+                                                Unit:  <span className="text-pink-600">{caseData["Unit phone#"]} </span>
                                             </p>
                                         )}
                                     </div>

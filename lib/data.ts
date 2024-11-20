@@ -335,7 +335,7 @@ export const facilities: FacilityType[] = [
         urReviewFax: "",
     },
     {
-        name: "Jacobs Medical Center aty UC San Diego Health",
+        name: "Jacobs Medical Center at UC San Diego Health",
         address: "9300 Campus Point Drive San Diego, CA 92037",
         mainline: "858-657-7000",
         caseManagement: "",
@@ -1060,17 +1060,17 @@ export const facilities: FacilityType[] = [
         caseManagementFax: "",
         urReviewFax: "818-902-3944",
     },
-    {
-        name: "",
-        address: "",
-        mainline: "",
-        caseManagement: "",
-        medicalRecords: "",
-        urReview: "",
-        admitting: "",
-        caseManagementFax: "",
-        urReviewFax: "",
-    },
+    // {
+    //     name: "",
+    //     address: "",
+    //     mainline: "",
+    //     caseManagement: "",
+    //     medicalRecords: "",
+    //     urReview: "",
+    //     admitting: "",
+    //     caseManagementFax: "",
+    //     urReviewFax: "",
+    // },
 
 ]
 
