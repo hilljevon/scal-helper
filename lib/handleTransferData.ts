@@ -74,6 +74,7 @@ export function parseAndRemoveKeys(caseData: CaseDataInterface) {
     for (let i = 0; i < indexedPatientDataArray.length; i++) {
         patientDataObject[masterKeys[i]] = indexedPatientDataArray[i]
     }
+    console.log('My patient object here', patientDataObject)
     return patientDataObject
 
 }
@@ -84,7 +85,6 @@ export function handleEngagementNote(caseData: CaseDataInterface) {
     const indexedPatientDataArray = [];
     // Split the input string by colons
     const parsed = caseData.engagementNote.split(/\s*:\s*/);
-    console.log("Parsed here", parsed)
     // we need to place each found index since that will be the first half of the next string
     const engagementNoteObject = {} as any
     let placeholderObjectKey = parsed[0]
@@ -103,5 +103,5 @@ export function handleEngagementNote(caseData: CaseDataInterface) {
         }
 
     }
-    console.log("Engagement Note Object", engagementNoteObject)
+    return engagementNoteObject
 }

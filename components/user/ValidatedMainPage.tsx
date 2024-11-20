@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label"
 
 import { Textarea } from "@/components/ui/textarea"
 
+import { Check, ChevronsUpDown } from "lucide-react"
 
 import {
     Form,
@@ -21,19 +22,56 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { handleEngagementNote, parseAndRemoveKeys, test1, test2 } from "@/lib/handleTransferData"
 import { useState } from "react"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from "@/components/ui/command"
+import { cn } from "@/lib/utils"
+import { HomeFacilities, HomeFacilityType } from "@/lib/data"
+import Link from "next/link"
+type GeneralDataInterface = {
+    patientName: string,
+    rnCaseManager: string,
+    facility: HomeFacilityType
+}
 // form schema for not engagement note
 const formSchema = z.object({
     engagementNote: z.string().min(2, {
         message: "Engagement note not valid",
     }),
     patientName: z.string(),
-    rnName: z.string()
+    rnName: z.string(),
+    facility: z.string()
 })
 
 export function ValidatedMainPage() {
@@ -43,27 +81,32 @@ export function ValidatedMainPage() {
         defaultValues: {
             engagementNote: test2,
             patientName: "",
-            rnName: ""
+            rnName: "",
+            facility: ""
         },
     })
     // case data will eventually be set to all the clinical patient info
     const [caseData, setCaseData] = useState<any>(null)
     // General data pertains to all info that is not included in the original engagement note
-    const [generalData, setGeneralData] = useState({
+    const [generalData, setGeneralData] = useState<any>({
         patientName: "",
-        rnCaseManager: ""
+        rnCaseManager: "",
     })
+    const [currentFacility, setCurrentFacility] = useState<HomeFacilityType | null>(null)
     // Once engagement note + patient name + RN name form is filled, we can auto generate the data for one touch + timeout
     function onEngagementNoteSubmit(values: z.infer<typeof formSchema>) {
-        const dummyEngagementNote = handleEngagementNote(values)
-        // this function parses all the tx info into an object with all patient clinical info
-        const csData = parseAndRemoveKeys(values)
-        setCaseData(csData)
+        const filteredEngagementNote = handleEngagementNote(values)
+        const matchedFacility = HomeFacilities.find(facility => facility.name == values.facility)
+        setCaseData(filteredEngagementNote)
         setGeneralData({
             patientName: values.patientName,
-            rnCaseManager: values.rnName
+            rnCaseManager: values.rnName,
         })
+        matchedFacility && (
+            setCurrentFacility(matchedFacility)
+        )
     }
+    console.log(currentFacility)
     return (
         <>
             <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
@@ -102,6 +145,34 @@ export function ValidatedMainPage() {
                                         )}
                                     />
                                 </div>
+                                <div className="col-span-full">
+                                    <FormField
+                                        control={form.control}
+                                        name="facility"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Facility</FormLabel>
+                                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                    <FormControl>
+                                                        <SelectTrigger>
+                                                            <SelectValue placeholder="Select a facility" />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        {HomeFacilities.map((facility) => (
+                                                            <SelectItem value={facility.name} key={facility.name}>{facility.name}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                                {/* <FormDescription>
+                                                    You can manage email addresses in your{" "}
+                                                    <Link href="/examples/forms">email settings</Link>.
+                                                </FormDescription>
+                                                <FormMessage /> */}
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
                             </div>
 
                             <FormField
@@ -133,7 +204,30 @@ export function ValidatedMainPage() {
                         </form>
                     </Form>
                 </div>
-                <div className="relative hidden flex-col items-start gap-8 md:flex">
+                {/* <div className="relative hidden flex-col items-start gap-8 md:flex">
+                    <div className="grid w-full items-start gap-6">
+                        <div className="grid gap-6 rounded-lg border p-2">
+                            <div className="col-span-full">
+                                {currentFacility && (
+                                    <Breadcrumb>
+                                        <BreadcrumbList>
+                                            <BreadcrumbItem>
+                                                <BreadcrumbLink href="/"> <span className="font-bold">BUC: </span> {currentFacility.buc} </BreadcrumbLink>
+                                            </BreadcrumbItem>
+                                            <BreadcrumbSeparator />
+                                            <BreadcrumbItem>
+                                                <BreadcrumbLink href="/components"><span className="font-bold">MOD: </span> {currentFacility.modName[0]}</BreadcrumbLink>
+                                            </BreadcrumbItem>
+                                            <BreadcrumbSeparator />
+                                        </BreadcrumbList>
+                                    </Breadcrumb>
+                                )}
+                            </div>
+
+                        </div>
+                    </div>
+                </div> */}
+                <div className="relative  flex-col items-start gap-8 md:flex">
                     <form className="grid w-full items-start gap-6">
                         <fieldset className="grid gap-6 rounded-lg border p-2">
                             <div className="col-span-2">
@@ -163,6 +257,7 @@ export function ValidatedMainPage() {
                         </fieldset>
                     </form>
                 </div>
+                {/* TIMEOUT HTML */}
                 <div className="relative hidden flex-col items-start gap-8 md:flex">
                     <form className="grid w-full items-start gap-6">
                         <fieldset className="grid gap-6 rounded-lg border p-2">
@@ -174,7 +269,8 @@ export function ValidatedMainPage() {
                                             <p>
                                                 Timeout with <span className="text-blue-600"> {generalData.rnCaseManager} </span> on
                                                 <span className="text-blue-600"> {generalData.patientName} </span> <br /> <br />
-                                                Going to Kaiser XXX Room XXX, Report XXX, Pickup at XXX. <br />
+                                                Going to Kaiser <span className="text-blue-600"> {currentFacility ? (<p className="inline-block">{currentFacility.name}</p>) : (<p className="inline-block">XXX</p>)} </span>
+                                                Room XXX, Report XXX, Pickup at XXX. <br />
                                                 Transport Lv: <span className="text-blue-600"> {caseData["Transport Lv Req'd"]} </span>,
                                                 Equip Needed: <span className="text-blue-600"> {caseData["Equip needed"]} </span> <br />
                                                 Dx: <span className="text-blue-600"> {caseData["Transfer Dx"]} </span>,
@@ -194,6 +290,7 @@ export function ValidatedMainPage() {
                         </fieldset>
                     </form>
                 </div>
+
             </main>
         </>
     )
