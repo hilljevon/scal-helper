@@ -2,15 +2,22 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import {
+  Ambulance,
   Bird,
   Book,
+  BookUser,
   Bot,
+  BusFront,
+  CarIcon,
   CassetteTapeIcon,
   Code2,
   CornerDownLeft,
+  HelpCircle,
+  Info,
   LifeBuoy,
   Mic,
   Paperclip,
+  PhoneForwardedIcon,
   Rabbit,
   Settings,
   Settings2,
@@ -104,7 +111,7 @@ export default function RootLayout({
                         className="rounded-lg bg-muted"
                         aria-label="Playground"
                       >
-                        <SquareTerminal className="size-5" />
+                        <Ambulance className="size-5" />
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent side="right" sideOffset={5}>
@@ -123,7 +130,7 @@ export default function RootLayout({
                         className="rounded-lg"
                         aria-label="Models"
                       >
-                        <Bot className="size-5" />
+                        <PhoneForwardedIcon className="size-5" />
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent side="right" sideOffset={5}>
@@ -133,6 +140,25 @@ export default function RootLayout({
                 </Link>
               </TooltipProvider>
               <TooltipProvider>
+                <Link href={"/help"}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="rounded-lg"
+                        aria-label="Models"
+                      >
+                        <Info className="size-5" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="right" sideOffset={5}>
+                      Info
+                    </TooltipContent>
+                  </Tooltip>
+                </Link>
+              </TooltipProvider>
+              {/* <TooltipProvider>
                 <Link href={"/validated/requests"}>
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -150,8 +176,8 @@ export default function RootLayout({
                     </TooltipContent>
                   </Tooltip>
                 </Link>
-              </TooltipProvider>
-              <TooltipProvider>
+              </TooltipProvider> */}
+              {/* <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
@@ -167,8 +193,8 @@ export default function RootLayout({
                     Documentation
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
-              <TooltipProvider>
+              </TooltipProvider> */}
+              {/* <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
@@ -184,10 +210,10 @@ export default function RootLayout({
                     Settings
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
+              </TooltipProvider> */}
             </nav>
             <nav className="mt-auto grid gap-1 p-2">
-              <TooltipProvider>
+              {/* <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
@@ -220,7 +246,7 @@ export default function RootLayout({
                     Account
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
+              </TooltipProvider> */}
             </nav>
           </aside>
           <div className="flex flex-col">
