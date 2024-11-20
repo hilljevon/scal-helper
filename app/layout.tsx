@@ -95,7 +95,7 @@ export default function RootLayout({
             </div>
             <nav className="grid gap-1 p-2">
               <TooltipProvider>
-                <Link href={"/validated"}>
+                <Link href={"/"}>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
@@ -114,7 +114,7 @@ export default function RootLayout({
                 </Link>
               </TooltipProvider>
               <TooltipProvider>
-                <Link href={"/validated/directory"}>
+                <Link href={"/directory"}>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
