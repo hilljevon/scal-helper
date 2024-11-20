@@ -40,7 +40,6 @@ import {
 } from "@/components/ui/table"
 import * as React from "react"
 import { facilities } from "@/lib/data"
-import { Textarea } from "../ui/textarea"
 import ClinicalRequestForm from "./ClinicalRequestForm"
 
 interface DataTableProps<TData, TValue> {
@@ -134,7 +133,7 @@ export function DataTable<TData, TValue>({ columns, data, }: DataTableProps<TDat
                             <TableRow className="" key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead colSpan={1} key={header.id}>
+                                        <TableHead className="" colSpan={1} key={header.id}>
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -155,7 +154,7 @@ export function DataTable<TData, TValue>({ columns, data, }: DataTableProps<TDat
                                     data-state={row.getIsSelected() && "selected"}
                                 >
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell className="border" key={cell.id}>
+                                        <TableCell className="border p-2" key={cell.id}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}
@@ -182,6 +181,7 @@ export function DataTable<TData, TValue>({ columns, data, }: DataTableProps<TDat
                             </Button>
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-[600px] min-h-[400px] max-h-[80vh] overflow-y-auto">
+                            {/* Conditional rendering depeding on if a facility is selected */}
                             {Object.keys(rowSelection).length > 0 && selectedFacilities ? (
                                 <ClinicalRequestForm facilities={selectedFacilities} />
                             ) : (

@@ -2,25 +2,16 @@
 import {
     CornerDownLeft,
 } from "lucide-react"
-
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
 import { Textarea } from "@/components/ui/textarea"
-
-import { Check, ChevronsUpDown } from "lucide-react"
-
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
-    FormMessage,
 } from "@/components/ui/form"
 import {
     Breadcrumb,
@@ -37,28 +28,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { handleEngagementNote, parseAndRemoveKeys, test1, test2 } from "@/lib/handleTransferData"
+import { handleEngagementNote, test2 } from "@/lib/handleTransferData"
 import { useState } from "react"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-} from "@/components/ui/command"
 import { cn } from "@/lib/utils"
 import { HomeFacilities, HomeFacilityType } from "@/lib/data"
-import Link from "next/link"
 type GeneralDataInterface = {
     patientName: string,
     rnCaseManager: string,
@@ -106,7 +82,6 @@ export function ValidatedMainPage() {
             setCurrentFacility(matchedFacility)
         )
     }
-    console.log(currentFacility)
     return (
         <>
             <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
@@ -164,11 +139,6 @@ export function ValidatedMainPage() {
                                                         ))}
                                                     </SelectContent>
                                                 </Select>
-                                                {/* <FormDescription>
-                                                    You can manage email addresses in your{" "}
-                                                    <Link href="/examples/forms">email settings</Link>.
-                                                </FormDescription>
-                                                <FormMessage /> */}
                                             </FormItem>
                                         )}
                                     />

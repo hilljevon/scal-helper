@@ -1,31 +1,21 @@
 "use client"
 import React, { useEffect, useRef, useState } from 'react'
 import {
-    Dialog,
-    DialogContent,
     DialogDescription,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 import { Textarea } from "../ui/textarea"
 import { Button } from '../ui/button'
-import { PDFViewer } from '@react-pdf/renderer'
 import {
     Form,
-    FormControl,
-    FormDescription,
     FormField,
     FormItem,
-    FormLabel,
-    FormMessage,
 } from "@/components/ui/form"
-import dynamic from "next/dynamic";
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import PrintPage from './PrintPage'
 import Image from 'next/image'
 import {
     Table,
@@ -40,7 +30,6 @@ const FormSchema = z.object({
     clinReqPatients: z
         .string()
 })
-const ReactPDFRenderer = dynamic(() => import("./ReactPDFRenderer"), { ssr: false });
 
 const ClinicalRequestForm = ({ facilities }: { facilities: any[] }) => {
     const dialogContentRef = useRef<HTMLDivElement>(null);
@@ -123,7 +112,6 @@ const ClinicalRequestForm = ({ facilities }: { facilities: any[] }) => {
                                     <p>A physician is always available on request if your treating physician wishes to take advantage of the opportunity to address our member's curent care needs, to provide access to our member's clinical history, and to discuss our member's care to ensure mutual understanding and agreement. Your physician may also choose to discuss our member's care and prior medical history with one of our case managers.</p> <br /> <br />
                                     <p> Thank you for your cooperation, </p>
                                     Case Management Department
-
                                 </div>
                                 <div>
                                     {patientClinRequests && (
@@ -154,7 +142,6 @@ const ClinicalRequestForm = ({ facilities }: { facilities: any[] }) => {
                                             </Table>
                                             {/* <Button onClick={() => window.print()}>Print PDF</Button> */}
                                             <Button onClick={handlePrint}>Print PDF</Button>
-
                                             <style jsx>{`
                                     @media print {
                                         button { display: none; }
