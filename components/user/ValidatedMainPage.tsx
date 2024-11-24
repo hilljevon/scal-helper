@@ -76,18 +76,24 @@ export function ValidatedMainPage() {
     const [nkf, setNkf] = useState<FacilityType | null>(null)
     // Once engagement note + patient name + RN name form is filled, we can auto generate the data for one touch + timeout
     function onEngagementNoteSubmit(values: z.infer<typeof formSchema>) {
-        console.log("Values here", values)
+        // Takes engagement note and organizes it into patient data
         const filteredEngagementNote = handleEngagementNote(values)
+        // populate the KP facility data that user selects
         const matchedFacility = HomeFacilities.find(facility => facility.name == values.homeFacility)
+        // populate the NKF info that user selects
         const matchedNkf = facilities.find(nkf => nkf.name == values.nkf)
+        // generate our case data as the new case info object
         setCaseData(filteredEngagementNote)
+        // all other case info not included in the engagement note that user inputs
         setGeneralData({
             patientName: values.patientName,
             rnCaseManager: values.rnName,
         })
+        // if matched facility found, set currentFacility to such
         matchedFacility && (
             setCurrentFacility(matchedFacility)
         )
+        // if NFK facility found, set NKF to such
         matchedNkf && (
             setNkf(matchedNkf)
         )
@@ -242,9 +248,10 @@ export function ValidatedMainPage() {
                                 <div className="min-h-[24rem] min-w-[4rem] text-xs">
                                     <div className="flex w-full rounded-md border border-neutral-200 bg-transparent px-3 py-2 shadow-sm placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300 min-h-[24rem] min-w-[4rem] text-xs">
                                         {caseData && (
-                                            <p>
+                                            <p className="text-base">
                                                 One Touch Template <br /> <br />  Name:  <span className="text-red-600">{generalData.patientName} </span> <br />
                                                 Dx: <span className="text-red-600"> {caseData["Transfer Dx"]} </span>  <br />
+                                                NKF: <span className="text-red-600"> {nkf?.name} </span>  <br />
                                                 IVF/Drips: <span className="text-red-600">{caseData["IVF/Drips"]} </span><br />
                                                 COVID status: <span className="text-red-600">{caseData["COVID status"]} </span> <br />
                                                 Sitter/Restraints: <span className="text-red-600">{caseData["Sitter/Restraints"]} </span><br />
@@ -273,7 +280,7 @@ export function ValidatedMainPage() {
                                 <div className="min-h-[24rem] min-w-[4rem] text-xs">
                                     <div className="flex w-full rounded-md border border-neutral-200 bg-transparent px-3 py-2 shadow-sm placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300 min-h-[24rem] min-w-[4rem] text-xs">
                                         {caseData && (
-                                            <p>
+                                            <p className="text-lg">
                                                 Timeout with <span className="text-blue-600"> {generalData.rnCaseManager} </span> on
                                                 <span className="text-blue-600"> {generalData.patientName} </span> <br /> <br />
                                                 Going to Kaiser <span className="text-blue-600"> {currentFacility ? (<p className="inline-block">{currentFacility.name}</p>) : (<p className="inline-block">XXX</p>)} </span>
@@ -285,7 +292,7 @@ export function ValidatedMainPage() {
                                                 COVID status: <span className="text-blue-600"> {caseData["COVID status"]} </span> <br />
                                                 Sitter/Restraints: <span className="text-blue-600"> {caseData["Sitter/Restraints"]} </span>,
                                                 Iso: <span className="text-blue-600">{caseData["Iso (Y/N)"]} </span> ,
-                                                Code Status: <span className="text-blue-600"> {caseData["Code status"]} </span> <br />
+                                                Code Status: <span className="text-blue-600"> {caseData["Code status"]} </span> <br /> <br />
                                                 Leaving: <span className="text-pink-600"> {nkf ? (<p className="inline-block">{nkf.name}</p>) : (<p className="inline-block">XXX</p>)} </span>,
                                                 <span className="text-pink-600">{caseData["Current Bed Level"]} </span>
                                                 <span className="text-pink-600">{caseData["Current RM"]} </span>,

@@ -30,15 +30,25 @@ const FormSchema = z.object({
     clinReqPatients: z
         .string()
 })
-
+// Dummy Data generated from pasting assignments to textbox
+const dummyData = 'Michael\tSmith\t03/13/1935\t00-00345931035\t35\t4\tSepsis\tPalmdale Desert Regional\t11/02/2024\nKyle\tHunter\t04/01/1968\t00-23946893\t74\t15\tAfib\tPalmdale Desert Regional\t11/01/2024\nSam\tJenkins\t02/22/1955\t00-2569421\t66\t2\tCovid-19\tPalmdale Desert Regional\t11/12/2024'
 const ClinicalRequestForm = ({ facilities }: { facilities: any[] }) => {
+    // dialog that gets populated for clinical request preview
     const dialogContentRef = useRef<HTMLDivElement>(null);
+    // determines whether we are on paste page or clincal request preview page
     const [isPDFView, setIsPDFView] = useState(false)
+    // form preview
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
+        defaultValues: {
+            clinReqPatients: dummyData
+        }
     })
+    // after being separated from the initial string, the separated patients are stored in this state
     const [patientClinRequests, setPatientClinRequests] = useState<any[]>([])
+    // populates the current date for clinical request autofill
     const [currentDate, setCurrentDate] = useState<string>("")
+    // to prevent hydration errors, current date generated upon client component launch
     useEffect(() => {
         const date = new Date(Date.now()).toLocaleDateString('en-US', {
             month: '2-digit',
@@ -47,14 +57,20 @@ const ClinicalRequestForm = ({ facilities }: { facilities: any[] }) => {
         });
         setCurrentDate(date)
     }, [])
+    // after pasting the case assignments and clicking next, the text is parsed and each individual patient is generated
     function onSubmit(data: z.infer<typeof FormSchema>) {
-        console.log("Inside onsubmit function")
+        // Split arrays will separate each individual patient ROW. If three rows are inputted into the textbox, there will be an array of 3 strings.
         const splitArrays = (data.clinReqPatients.split("\n"))
+        // New strings takes the one long string we have of all the patient data, and separates it by cell. Instead of one long string, it will be separated by each unique case detail (name, facility, dx)
         const newStrings = splitArrays.map((s: string) => {
+            // \t is the notation for new excel columns
             return s.split("\t")
         })
+        // this is our returning array that will contain each patient's data as an object
         const allRequests = []
+        // We only need to loop according to how many rows were pasted. Then we are accessing the appropriate indexes so long as the user pasted from the first name to the admitDate. 
         for (let i = 0; i < newStrings.length; i++) {
+            // for this object, the first index represents the specific case while the second index represents the particular case data.
             const patientReq = {
                 firstName: newStrings[i][0],
                 lastName: newStrings[i][1],
@@ -62,11 +78,15 @@ const ClinicalRequestForm = ({ facilities }: { facilities: any[] }) => {
                 mrn: newStrings[i][3],
                 admitDate: newStrings[i][8]
             }
+            // after generating all organized case data, we need to push to final result array
             allRequests.push(patientReq)
         }
+        // reset our state to reflect new patients
         setPatientClinRequests(allRequests)
+        // populate clinical request preview
         setIsPDFView(() => !isPDFView)
     }
+    // generates a new tab with print preview
     const handlePrint = () => {
         const content = dialogContentRef.current?.innerHTML;
         if (content) {
@@ -94,6 +114,7 @@ const ClinicalRequestForm = ({ facilities }: { facilities: any[] }) => {
     return (
         <>
             {isPDFView ? (
+                // clinical request dialog
                 <DialogHeader>
                     <div ref={dialogContentRef}>
                         <DialogTitle></DialogTitle>
@@ -160,6 +181,7 @@ const ClinicalRequestForm = ({ facilities }: { facilities: any[] }) => {
                     </div>
                 </DialogHeader>
             ) : (
+                // textbox form
                 <DialogHeader>
                     <DialogTitle> {facilities[0].name} </DialogTitle>
                     <DialogDescription asChild>
