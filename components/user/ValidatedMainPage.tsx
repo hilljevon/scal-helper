@@ -18,7 +18,6 @@ import {
     BreadcrumbItem,
     BreadcrumbLink,
     BreadcrumbList,
-    BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import {
@@ -28,6 +27,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion"
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -243,7 +249,7 @@ export function ValidatedMainPage() {
                 <div className="relative  flex-col items-start gap-8 md:flex">
                     <form className="grid w-full items-start gap-6">
                         <fieldset className="grid gap-6 rounded-lg border p-2">
-                            <div className="col-span-2">
+                            <div className="col-span-full">
                                 <Label htmlFor="oneTouchTemplate">One Touch</Label>
                                 <div className="min-h-[24rem] min-w-[4rem] text-xs">
                                     <div className="flex w-full rounded-md border border-neutral-200 bg-transparent px-3 py-2 shadow-sm placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300 min-h-[24rem] min-w-[4rem] text-xs">
@@ -268,6 +274,21 @@ export function ValidatedMainPage() {
                                     </div>
                                 </div>
                             </div>
+                            <div className="col-span-full">
+                                <Accordion type="single" collapsible>
+                                    <AccordionItem value="item-1">
+                                        <AccordionTrigger>One Touch Process</AccordionTrigger>
+                                        <AccordionContent className="text-xs">
+                                            <span className="font-extrabold">1. </span> Check <span className="underline text-blue-600 hover:cursor-pointer">CEDOCS </span> to make sure facility is open <br />
+                                            <span className="font-extrabold">2. </span> Confirm if there are sister facilities <br />
+                                            <span className="font-extrabold">2a. </span>If yes, confirm with BUC on which facility to proceed. <br />
+                                            <span className="font-extrabold">3. </span> Send cortext to OURS One Touch group, MD on call, OURS physician, and OURS CM. <br />
+                                            <span className="font-extrabold">4. </span> Confirm MD accept + bed. <br />
+                                            <span className="font-extrabold">5. </span> Tx checkoff list + vital signs.
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                </Accordion>
+                            </div>
                         </fieldset>
                     </form>
                 </div>
@@ -275,7 +296,7 @@ export function ValidatedMainPage() {
                 <div className="relative hidden flex-col items-start gap-8 md:flex">
                     <form className="grid w-full items-start gap-6">
                         <fieldset className="grid gap-6 rounded-lg border p-2">
-                            <div className="col-span-2">
+                            <div className="col-span-full">
                                 <Label htmlFor="oneTouchTemplate">Timeout</Label>
                                 <div className="min-h-[24rem] min-w-[4rem] text-xs">
                                     <div className="flex w-full rounded-md border border-neutral-200 bg-transparent px-3 py-2 shadow-sm placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300 min-h-[24rem] min-w-[4rem] text-xs">
@@ -301,6 +322,21 @@ export function ValidatedMainPage() {
                                         )}
                                     </div>
                                 </div>
+                            </div>
+                            <div className="col-span-full">
+                                <Accordion type="single" collapsible>
+                                    <AccordionItem value="item-1">
+                                        <AccordionTrigger>Regular Process</AccordionTrigger>
+                                        <AccordionContent className="text-xs">
+                                            <span className="font-extrabold">1. </span> Check <span className="underline text-blue-600 hover:cursor-pointer">CEDOCS </span> to make sure facility is open <br />
+                                            <span className="font-extrabold">2. </span> Contact BUC {currentFacility?.buc} for ok to get accepting  <br />
+                                            <span className="font-extrabold">3. </span>If yes, cortext once summary is uploaded. <br />
+                                            <span className="font-extrabold">3. </span> Notify BUC of accepting MD. <br />
+                                            <span className="font-extrabold">4. </span> Tx checkoff list. <br />
+                                            <span className="font-extrabold">5. </span> Once bed info provided, set up vectorcare + vitals.
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                </Accordion>
                             </div>
                         </fieldset>
                     </form>

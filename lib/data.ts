@@ -1073,7 +1073,12 @@ export const facilities: FacilityType[] = [
     // },
 
 ]
-
+export type HomeFacilityOutpatientType = {
+    name: string,
+    homeHealth: string,
+    ouc: string,
+    homeInfusion: string
+}
 export const HomeFacilities: HomeFacilityType[] = [
     {
         name: "Antelope Valley Medical Center",
@@ -1154,5 +1159,81 @@ export const HomeFacilities: HomeFacilityType[] = [
         name: "Woodland Hills",
         buc: "WH Bed Board Coordinators",
         modName: ["HOD Consult / HOD Cross Over"]
+    }
+]
+
+export const HomeFacilityOutpatient = [
+    {
+        name: "Baldwin Park",
+        homeHealth: "626-480-5177",
+        ouc: "OURS",
+        homeInfusion: "714-748-6333"
+    },
+    {
+        name: "Downey",
+        homeHealth: "562-622-4350",
+        ouc: "OURS",
+        homeInfusion: "714-748-6333"
+    },
+    {
+        name: "Los Angeles",
+        homeHealth: "323-783-4375",
+        ouc: "OURS",
+        homeInfusion: "714-748-6333"
+    },
+
+    {
+        name: "Anaheim",
+        homeHealth: "714-734-4500",
+        ouc: "949-923-8186",
+        homeInfusion: "714-748-6333"
+    },
+    {
+        name: "Irvine",
+        homeHealth: "714-734-4500",
+        ouc: "949-923-8186",
+        homeInfusion: "714-748-6333"
+    },
+    {
+        name: "Panorama City",
+        homeHealth: "818-832-7272",
+        ouc: "818-375-3444",
+        homeInfusion: "818-375-2462"
+    },
+    {
+        name: "Riverside",
+        homeHealth: "951-358-2600",
+        ouc: "951-353-3010",
+        homeInfusion: "909-609-3360"
+    },
+    {
+        name: "Fontana",
+        homeHealth: "909-609-3800",
+        ouc: "909-609-3400",
+        homeInfusion: "909-609-3360"
+    },
+    {
+        name: "San Diego",
+        homeHealth: "619-641-4211",
+        ouc: "619-528-5200",
+        homeInfusion: "619-641-4211"
+    },
+    {
+        name: "Harbor City (South Bay)",
+        homeHealth: "877-486-4020",
+        ouc: "OURS",
+        homeInfusion: "714-748-6333"
+    },
+    {
+        name: "West Los Angeles",
+        homeHealth: "323-783-4375",
+        ouc: "OURS",
+        homeInfusion: "323-857-4048"
+    },
+    {
+        name: "Woodland Hills",
+        homeHealth: "818-832-7272",
+        ouc: "",
+        homeInfusion: "818-375-2462"
     }
 ]

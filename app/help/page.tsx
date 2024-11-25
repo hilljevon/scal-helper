@@ -1,8 +1,11 @@
+import HelpPage from '@/components/user/HelpPage'
 import React from 'react'
 
 const page = () => {
     return (
-        <div>page</div>
+        <>
+            <HelpPage />
+        </>
     )
 }
 
