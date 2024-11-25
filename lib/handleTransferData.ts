@@ -93,6 +93,11 @@ export function handleEngagementNote(caseData: CaseDataInterface) {
     const engagementNoteObject = {} as any
     let placeholderObjectKey = parsed[0]
     for (let i = 1; i < parsed.length; i++) {
+        if (i == parsed.length - 1) {
+            const lastKey = parsed[i]
+            engagementNoteObject[placeholderObjectKey] = lastKey
+
+        }
         // current iteration of isolated phrase in engagement
         const curr = parsed[i]
         const match = keysToInclude.find(word => curr.includes(word))
