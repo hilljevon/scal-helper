@@ -269,7 +269,7 @@ export function ValidatedMainPage() {
                                                 {/* May need to create conditional */}
                                                 Weight: <span className="text-red-600">{caseData["Wt"]} </span> <br />
                                                 {/* May need to create conditional */}
-                                                Bed Lvl: <span className="text-red-600">{caseData["Bed Lv Req'ed"]}</span> <br /> <br />
+                                                Bed Lvl: <span className="text-red-600">{caseData["Bed Lv Req’ed"]}</span> <br /> <br />
                                                 UA: <span className="text-red-600"> Jevon H </span><br />
                                                 RN:  <span className="text-red-600">{generalData.rnCaseManager} </span> <br /> <br />
                                                 If you can accept the patient, please reply "Accept"
@@ -309,9 +309,9 @@ export function ValidatedMainPage() {
                                                 Timeout with <span className="text-blue-600"> {generalData.rnCaseManager} </span> on
                                                 <span className="text-blue-600"> {generalData.patientName} </span> <br /> <br />
                                                 Going to Kaiser <span className="text-blue-600"> {currentFacility ? (<p className="inline-block">{currentFacility.name}</p>) : (<p className="inline-block">XXX</p>)} </span>
-                                                Room XXX, Report XXX, Pickup at XXX. <br />
-                                                Transport Lv: <span className="text-blue-600"> {caseData["Transport Lv Req'd"]} </span>,
-                                                Equip Needed: <span className="text-blue-600"> {caseData["Equip needed"]} </span> <br />
+                                                Room XXX, Report XXX, Pickup at XXX. Level of Care: <p className="inline-block">{caseData["Bed Lv Req’ed"]}</p> <br />
+                                                Transport Lv: <span className="text-blue-600"> {caseData["Transport Lv Req’d"]} </span>,
+                                                Equip Needed: <span className="text-blue-600"> {caseData["Equip. needed"]} </span> <br />
                                                 Dx: <span className="text-blue-600"> {caseData["Transfer Dx"]} </span>,
                                                 IVF/Drips: <span className="text-blue-600"> {caseData["IVF/Drips"]} </span>,
                                                 COVID status: <span className="text-blue-600"> {caseData["COVID status"]} </span> <br />
@@ -321,7 +321,8 @@ export function ValidatedMainPage() {
                                                 Leaving: <span className="text-pink-600"> {nkf ? (<p className="inline-block">{nkf.name}</p>) : (<p className="inline-block">XXX</p>)} </span>,
                                                 <span className="text-pink-600">{caseData["Current Bed Level"]} </span>
                                                 <span className="text-pink-600">{caseData["Current RM"]} </span>,
-                                                Unit:  <span className="text-pink-600">{caseData["Unit phone#"]} </span>
+                                                Unit:  <span className="text-pink-600">{caseData["Unit phone#"]} </span> <br />
+                                                Ht: {caseData["Ht"]}, Wt: {caseData["Wt"]}
                                             </p>
                                         )}
                                     </div>

@@ -7,8 +7,10 @@ const results = {};
 const keysToInclude = [
     "Bed Lv Req'd",
     "Bed Lv Req'ed",
+    "Bed Lv Req’ed",
     "Transport Lv Req'd",
     "Transport Lv Req'ed",
+    "Transport Lv Req’ed",
     "Equip needed",
     "Equip. needed",
     "IVF/Drips",
