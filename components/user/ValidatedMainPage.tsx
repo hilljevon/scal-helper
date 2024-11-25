@@ -256,6 +256,7 @@ export function ValidatedMainPage() {
                                         {caseData && (
                                             <p className="text-base">
                                                 One Touch Template <br /> <br />  Name:  <span className="text-red-600">{generalData.patientName} </span> <br />
+                                                {/* May need to create conditional */}
                                                 Dx: <span className="text-red-600"> {caseData["Transfer Dx"]} </span>  <br />
                                                 NKF: <span className="text-red-600"> {nkf?.name} </span>  <br />
                                                 IVF/Drips: <span className="text-red-600">{caseData["IVF/Drips"]} </span><br />
@@ -263,9 +264,12 @@ export function ValidatedMainPage() {
                                                 Sitter/Restraints: <span className="text-red-600">{caseData["Sitter/Restraints"]} </span><br />
                                                 Iso: <span className="text-red-600">{caseData["Iso (Y/N)"]} </span> <br />
                                                 Code Status: <span className="text-red-600">{caseData["Code status"]} </span> <br />
+                                                {/* May need to create conditional */}
                                                 Height: <span className="text-red-600">{caseData["Ht"]} </span> <br />
-                                                Weight: <span className="text-red-600">{caseData["wt"]} </span> <br />
-                                                Bed Lvl: <span className="text-red-600">{caseData["Bed Lv Req'd"]}</span> <br /> <br />
+                                                {/* May need to create conditional */}
+                                                Weight: <span className="text-red-600">{caseData["Wt"]} </span> <br />
+                                                {/* May need to create conditional */}
+                                                Bed Lvl: <span className="text-red-600">{caseData["Bed Lv Req'ed"]}</span> <br /> <br />
                                                 UA: <span className="text-red-600"> Jevon H </span><br />
                                                 RN:  <span className="text-red-600">{generalData.rnCaseManager} </span> <br /> <br />
                                                 If you can accept the patient, please reply "Accept"

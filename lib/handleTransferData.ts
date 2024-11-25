@@ -6,8 +6,11 @@ const results = {};
 
 const keysToInclude = [
     "Bed Lv Req'd",
+    "Bed Lv Req'ed",
     "Transport Lv Req'd",
+    "Transport Lv Req'ed",
     "Equip needed",
+    "Equip. needed",
     "IVF/Drips",
     "Current Bed Level",
     "Current RM",
@@ -26,7 +29,8 @@ const keysToInclude = [
     "If yes, specify",
     "Code status",
     "Ht",
-    "wt"
+    "wt",
+    "Wt"
 ];
 const masterKeys = [
     "Bed Lv Req'd",
@@ -80,8 +84,6 @@ export function parseAndRemoveKeys(caseData: CaseDataInterface) {
 }
 // Need to get more test engagement notes in order to test this function (CMA engagements, look through other CCR engagements)
 export function handleEngagementNote(caseData: CaseDataInterface) {
-    // in order to account for empty strings when the engagement note is not complete  ****
-    // whenever there is an empty string, the index of the new engagement note title entry is at index 0. example, if fax number is blank the following index (NKF MD Name) will begin at string index 0
     const indexedPatientDataArray = [];
     // Split the input string by colons
     const parsed = caseData.engagementNote.split(/\s*:\s*/);
@@ -89,13 +91,14 @@ export function handleEngagementNote(caseData: CaseDataInterface) {
     const engagementNoteObject = {} as any
     let placeholderObjectKey = parsed[0]
     for (let i = 1; i < parsed.length; i++) {
+        // current iteration of isolated phrase in engagement
         const curr = parsed[i]
         const match = keysToInclude.find(word => curr.includes(word))
         // in the event that a match is found, that means we have to potentially split the string. we need to confirm where the match is located. due to extra entries in engagement notes, its important to include this match 
         if (match) {
             // this takes the index of our current iteration string that contains one of the titles for the engagement note
             const index = curr.indexOf(match)
-            // with my current index, i need to split the string in half. the first half will be hashed with the previous key stored. the following will become the new key. 
+            // with the current index, i need to split the string in half. the first half will be hashed with the previous key stored. the following will become the new key. 
             const firstHalf = curr.slice(0, index)
             const secondHalf = curr.slice(index)
             engagementNoteObject[placeholderObjectKey] = firstHalf;
@@ -103,5 +106,6 @@ export function handleEngagementNote(caseData: CaseDataInterface) {
         }
 
     }
+    console.log("Engagement note object", engagementNoteObject)
     return engagementNoteObject
 }
