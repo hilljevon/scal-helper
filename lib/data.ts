@@ -1081,6 +1081,11 @@ export type HomeFacilityOutpatientType = {
 }
 export const HomeFacilities: HomeFacilityType[] = [
     {
+        name: "Anaheim",
+        buc: "OC Bed Nurses",
+        modName: ['Care Without Delay', "Internal Medicine On Call - ANA"]
+    },
+    {
         name: "Antelope Valley Medical Center",
         buc: "661-802-2300",
         modName: ["Exchange Line"]
@@ -1091,19 +1096,39 @@ export const HomeFacilities: HomeFacilityType[] = [
         modName: ['DOD']
     },
     {
-        name: "Los Angeles",
-        buc: "LAMC Throughput Bed 1",
-        modName: ['A.O.D Admitting DR']
+        name: "Downey",
+        buc: "Call BUC",
+        modName: ["Medical Consult"]
     },
     {
-        name: "Anaheim",
-        buc: "OC Bed Nurses",
-        modName: ['Care Without Delay', "Internal Medicine On Call - ANA"]
+        name: "Fontana",
+        buc: "SBC Bed Control",
+        modName: ['Care Without Delay Physician']
+    },
+    {
+        name: "Harbor City (South Bay)",
+        buc: "SB OURS One Touch",
+        modName: ['IOD']
     },
     {
         name: "Irvine",
         buc: "OC Bed Nurses",
         modName: ['Care Without Delay', "Internal Medicine On Call - ANA"]
+    },
+    {
+        name: "Los Angeles",
+        buc: "LAMC Throughput Bed 1",
+        modName: ['A.O.D Admitting DR']
+    },
+    {
+        name: "Moreno Valley",
+        buc: "Riverside CM Bed Coordinator",
+        modName: ['MVH IM/HMOD, ER MOD/R MOD', "MVH IM/IQM MD/CWD Advisor", "MVH IM/EPRP/Clinic/OURS"]
+    },
+    {
+        name: "Ontario",
+        buc: "SBC Bed Control",
+        modName: ['Care Without Delay Physician', "After 5pm: Hospital Medicine 1604 OMC"]
     },
     {
         name: "Panorama City",
@@ -1116,21 +1141,6 @@ export const HomeFacilities: HomeFacilityType[] = [
         modName: ['Riv IM/HMOD, ER MOD/R MOD', "Riv IM/IQM MD/CWD Advisor", "Riv IM/EPRP/Clinic/OURS"]
     },
     {
-        name: "Moreno Valley",
-        buc: "Riverside CM Bed Coordinator",
-        modName: ['MVH IM/HMOD, ER MOD/R MOD', "MVH IM/IQM MD/CWD Advisor", "MVH IM/EPRP/Clinic/OURS"]
-    },
-    {
-        name: "Fontana",
-        buc: "SBC Bed Control",
-        modName: ['Care Without Delay Physician']
-    },
-    {
-        name: "Ontario",
-        buc: "SBC Bed Control",
-        modName: ['Care Without Delay Physician', "After 5pm: Hospital Medicine 1604 OMC"]
-    },
-    {
         name: "San Diego",
         buc: "SD Bed Control OURS Main",
         modName: ['MOD SDMC 1']
@@ -1141,16 +1151,6 @@ export const HomeFacilities: HomeFacilityType[] = [
         modName: ['MOD SMMC 1']
     },
     {
-        name: "Zion",
-        buc: "SD Bed Control OURS Main",
-        modName: ['MOD Zion 1']
-    },
-    {
-        name: "Harbor City (South Bay)",
-        buc: "SB OURS One Touch",
-        modName: ['IOD']
-    },
-    {
         name: "West Los Angeles",
         buc: "WLA BUC",
         modName: ["MOD/Hospitalist"]
@@ -1159,7 +1159,13 @@ export const HomeFacilities: HomeFacilityType[] = [
         name: "Woodland Hills",
         buc: "WH Bed Board Coordinators",
         modName: ["HOD Consult / HOD Cross Over"]
-    }
+    },
+
+    {
+        name: "Zion",
+        buc: "SD Bed Control OURS Main",
+        modName: ['MOD Zion 1']
+    },
 ]
 
 export const HomeFacilityOutpatient = [
