@@ -1,6 +1,9 @@
 'use client'
 import {
+    ArrowRight,
+    ChevronRight,
     CornerDownLeft,
+    StepForward,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -56,13 +59,18 @@ const formSchema = z.object({
     homeFacility: z.string(),
     nkf: z.string()
 })
-
+const dummyEngagementNoteData = [
+    "Bed Lv Req’ed: tele Transport Lv Req’ed: als Equip needed: monitor, oxygen prn IVF/Drips: none Current Bed Level: med surg Current RM: 2114 Unit phone#: 919 336 5502 x2147 Fax#: NKF MD name: dr francis NKF MD phone #: 714 551 0992 Transfer Dx: s/p glioblastoma resection COVID status: not done Test Date (if applicable): Sitter/Restraints:n Iso (Y/N): Droplet ISO If yes, specify: Rhinovirus  Code status: full Ht: 5ft 10in Wt: 109 lbs",
+    "Bed Lv Req’ed: ICU Transport Lv Req’ed: CCT-RN Equip needed: monitor, mask IVF/Drips: heparin gtt 5cc/hr Current Bed Level: ICU Current RM: 5223 Unit phone#: 646-442-2214 Fax#: NKF MD name: dr Smith NKF MD phone #: 949-324-2147 Transfer Dx: SEPSIS, COVID COVID status: Positive Test Date(if applicable): 10 / 14 Sitter / Restraints:Bilateral wrist restraints Iso (Y/N): Y If yes, specify: COVID Code status: DNR / DNI Ht: 170cm Wt: 57kg",
+    "Bed Lv Req’ed: DOU Transport Lv Req’ed: BLS Equip needed: Cardiac Monitor IVF/Drips: Normal saline Current Bed Level: Tele Current RM: 1234 Unit phone#: 714-768-2944 Fax#: 714-888-4563 NKF MD name: dr Silvia Martinez NKF MD phone #: 949-324-2147 Transfer Dx: Failure to thrive COVID status: negative Test Date(if applicable): 10 / 14 Sitter / Restraints: Sitter Bilateral wrist restraints Iso (Y/N): N If yes, specify: Code status: DNR / DNI Ht: 170cm Wt: 57kg"
+]
 export function ValidatedMainPage() {
+    const [activeEngagementNote, setActiveEngagementNote] = useState(0)
     // default form for engagement 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            engagementNote: test2,
+            engagementNote: dummyEngagementNoteData[activeEngagementNote],
             patientName: "",
             rnName: "",
             homeFacility: "",
@@ -76,6 +84,7 @@ export function ValidatedMainPage() {
         patientName: "",
         rnCaseManager: "",
     })
+
     // THIS IS THE HOME FACILITY
     const [currentFacility, setCurrentFacility] = useState<HomeFacilityType | null>(null)
     // this is the facility the patient is currently at
@@ -103,6 +112,10 @@ export function ValidatedMainPage() {
         matchedNkf && (
             setNkf(matchedNkf)
         )
+    }
+    const toggleEngagementNote = () => {
+        setActiveEngagementNote((prevInt) => (prevInt + 1) % 3)
+        form.setValue("engagementNote", dummyEngagementNoteData[activeEngagementNote])
     }
     return (
         <>
@@ -224,7 +237,16 @@ export function ValidatedMainPage() {
                                     <FormItem>
                                         <fieldset className="grid gap-6 rounded-lg border p-4">
                                             <div className="grid gap-3">
-                                                <FormLabel htmlFor="engagementNote">Engagement Note</FormLabel>
+                                                <FormLabel htmlFor="engagementNote">
+                                                    <div className="flex justify-between">
+                                                        <div>
+                                                            Engagement Note
+                                                        </div>
+                                                        <div>
+                                                            <ChevronRight onClick={toggleEngagementNote} className="size-5 hover:cursor-pointer" />
+                                                        </div>
+                                                    </div>
+                                                </FormLabel>
                                                 <FormControl>
                                                     <Textarea
                                                         id="engagementNote"
@@ -256,13 +278,14 @@ export function ValidatedMainPage() {
                                         {caseData && (
                                             <p className="text-base">
                                                 One Touch Template <br /> <br />  Name:  <span className="text-red-600">{generalData.patientName} </span> <br />
+
                                                 {/* May need to create conditional */}
                                                 Dx: <span className="text-red-600"> {caseData["Transfer Dx"]} </span>  <br />
                                                 NKF: <span className="text-red-600"> {nkf?.name} </span>  <br />
                                                 IVF/Drips: <span className="text-red-600">{caseData["IVF/Drips"]} </span><br />
                                                 COVID status: <span className="text-red-600">{caseData["COVID status"]} </span> <br />
                                                 Sitter/Restraints: <span className="text-red-600">{caseData["Sitter/Restraints"]} </span><br />
-                                                Iso: <span className="text-red-600">{caseData["Iso (Y/N)"]} </span> <br />
+                                                Iso: <span className="text-red-600">{caseData["Iso (Y/N)"]} {caseData["If yes, specify"]}  </span> <br />
                                                 Code Status: <span className="text-red-600">{caseData["Code status"]} </span> <br />
                                                 {/* May need to create conditional */}
                                                 Height: <span className="text-red-600">{caseData["Ht"]} </span> <br />
@@ -316,7 +339,7 @@ export function ValidatedMainPage() {
                                                 IVF/Drips: <span className="text-blue-600"> {caseData["IVF/Drips"]} </span>,
                                                 COVID status: <span className="text-blue-600"> {caseData["COVID status"]} </span> <br />
                                                 Sitter/Restraints: <span className="text-blue-600"> {caseData["Sitter/Restraints"]} </span>,
-                                                Iso: <span className="text-blue-600">{caseData["Iso (Y/N)"]} </span> ,
+                                                Iso: <span className="text-blue-600">{caseData["Iso (Y/N)"]} {caseData["If yes, specify"]} </span> ,
                                                 Code Status: <span className="text-blue-600"> {caseData["Code status"]} </span> <br /> <br />
                                                 Leaving: <span className="text-pink-600"> {nkf ? (<p className="inline-block">{nkf.name}</p>) : (<p className="inline-block">XXX</p>)} </span>,
                                                 <span className="text-pink-600">{caseData["Current Bed Level"]} </span>
