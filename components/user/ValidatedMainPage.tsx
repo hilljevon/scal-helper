@@ -57,7 +57,8 @@ const formSchema = z.object({
     patientName: z.string(),
     rnName: z.string(),
     homeFacility: z.string(),
-    nkf: z.string()
+    nkf: z.string(),
+    mrn: z.string()
 })
 const dummyEngagementNoteData = [
     "Bed Lv Req’ed: tele Transport Lv Req’ed: als Equip needed: monitor, oxygen prn IVF/Drips: none Current Bed Level: med surg Current RM: 2114 Unit phone#: 919 336 5502 x2147 Fax#: NKF MD name: dr francis NKF MD phone #: 714 551 0992 Transfer Dx: s/p glioblastoma resection COVID status: not done Test Date (if applicable): Sitter/Restraints:n Iso (Y/N): Droplet ISO If yes, specify: Rhinovirus  Code status: full Ht: 5ft 10in Wt: 109 lbs",
@@ -74,7 +75,8 @@ export function ValidatedMainPage() {
             patientName: "",
             rnName: "",
             homeFacility: "",
-            nkf: ""
+            nkf: "",
+            mrn: ""
         },
     })
     // case data will eventually be set to all the clinical patient info
@@ -83,8 +85,8 @@ export function ValidatedMainPage() {
     const [generalData, setGeneralData] = useState<any>({
         patientName: "",
         rnCaseManager: "",
+        mrn: ""
     })
-
     // THIS IS THE HOME FACILITY
     const [currentFacility, setCurrentFacility] = useState<HomeFacilityType | null>(null)
     // this is the facility the patient is currently at
@@ -103,6 +105,7 @@ export function ValidatedMainPage() {
         setGeneralData({
             patientName: values.patientName,
             rnCaseManager: values.rnName,
+            mrn: values.mrn
         })
         // if matched facility found, set currentFacility to such
         matchedFacility && (
@@ -154,7 +157,8 @@ export function ValidatedMainPage() {
                     {/* INITIAL INPUT FORM */}
                     <Form {...form} >
                         <form onSubmit={form.handleSubmit(onEngagementNoteSubmit)} className="grid w-full items-start gap-6">
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-3 text-sm">
+                                {/* PATIENT NAME FORM */}
                                 <div className="grid gap-3">
                                     <FormField
                                         control={form.control}
@@ -169,6 +173,7 @@ export function ValidatedMainPage() {
                                         )}
                                     />
                                 </div>
+                                {/* RN FORM */}
                                 <div className="grid gap-3">
                                     <FormField
                                         control={form.control}
@@ -183,6 +188,22 @@ export function ValidatedMainPage() {
                                         )}
                                     />
                                 </div>
+                                {/* MRN FORM */}
+                                <div className="col-span-full">
+                                    <FormField
+                                        control={form.control}
+                                        name="mrn"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <Label htmlFor="mrn">MRN</Label>
+                                                <FormControl>
+                                                    <Input id="mrn" type="" placeholder="" {...field} />
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                {/* HOME FACILITY FORM */}
                                 <div className="col-span-full">
                                     <FormField
                                         control={form.control}
@@ -206,6 +227,7 @@ export function ValidatedMainPage() {
                                         )}
                                     />
                                 </div>
+                                {/* NKF FORM */}
                                 <div className="col-span-full">
                                     <FormField
                                         control={form.control}
@@ -230,6 +252,7 @@ export function ValidatedMainPage() {
                                     />
                                 </div>
                             </div>
+                            {/* ENGAGEMENT NOTE FORM */}
                             <FormField
                                 control={form.control}
                                 name="engagementNote"
@@ -251,7 +274,7 @@ export function ValidatedMainPage() {
                                                     <Textarea
                                                         id="engagementNote"
                                                         placeholder="Insert Engagement Note"
-                                                        className="min-h-[18rem]"
+                                                        className="min-h-[14rem]"
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -278,7 +301,7 @@ export function ValidatedMainPage() {
                                         {caseData && (
                                             <p className="text-base">
                                                 One Touch Template <br /> <br />  Name:  <span className="text-red-600">{generalData.patientName} </span> <br />
-
+                                                MRN: <span className="text-red-600">{generalData.mrn} </span> <br />
                                                 {/* May need to create conditional */}
                                                 Dx: <span className="text-red-600"> {caseData["Transfer Dx"]} </span>  <br />
                                                 NKF: <span className="text-red-600"> {nkf?.name} </span>  <br />
@@ -330,7 +353,7 @@ export function ValidatedMainPage() {
                                         {caseData && (
                                             <p className="text-lg">
                                                 Timeout with <span className="text-blue-600"> {generalData.rnCaseManager} </span> on
-                                                <span className="text-blue-600"> {generalData.patientName} </span> <br /> <br />
+                                                <span className="text-blue-600"> {generalData.patientName} ({generalData["mrn"]}) </span> <br /> <br />
                                                 Going to Kaiser <span className="text-blue-600"> {currentFacility ? (<p className="inline-block">{currentFacility.name}</p>) : (<p className="inline-block">XXX</p>)} </span>
                                                 Room XXX, Report XXX, Pickup at XXX. Level of Care: <p className="inline-block">{caseData["Bed Lv Req’ed"]}</p> <br />
                                                 Transport Lv: <span className="text-blue-600"> {caseData["Transport Lv Req’d"]} </span>,
