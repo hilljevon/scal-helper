@@ -2,6 +2,7 @@
 import {
     ArrowRight,
     ChevronRight,
+    CopyCheckIcon,
     CornerDownLeft,
     StepForward,
 } from "lucide-react"
@@ -133,11 +134,11 @@ export function ValidatedMainPage() {
                                         <Breadcrumb>
                                             <BreadcrumbList>
                                                 <BreadcrumbItem>
-                                                    <BreadcrumbLink href="/"> <span className=" text-purple-500">BUC: </span> {currentFacility.buc} </BreadcrumbLink>
+                                                    <span className=" text-purple-500">BUC: </span> {currentFacility.buc}
                                                 </BreadcrumbItem>
                                                 <BreadcrumbSeparator />
                                                 <BreadcrumbItem>
-                                                    <BreadcrumbLink href="/components"><span className="text-green-500">MOD: </span> {currentFacility.modName[0]}</BreadcrumbLink>
+                                                    <span className="text-green-500">MOD: </span> {currentFacility.modName[0]}
                                                 </BreadcrumbItem>
                                                 <BreadcrumbSeparator />
                                             </BreadcrumbList>
@@ -335,6 +336,45 @@ export function ValidatedMainPage() {
                                             <span className="font-extrabold">3. </span> Send cortext to OURS One Touch group, MD on call, OURS physician, and OURS CM. <br />
                                             <span className="font-extrabold">4. </span> Confirm MD accept + bed. <br />
                                             <span className="font-extrabold">5. </span> Tx checkoff list + vital signs.
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                </Accordion>
+                            </div>
+                            <div className="col-span-full">
+                                <Accordion type="single" collapsible>
+                                    <AccordionItem value="item-2">
+                                        <AccordionTrigger>Vital Signs Template</AccordionTrigger>
+                                        <AccordionContent className="text-xs">
+                                            <div className="grid gap-3 grid-cols-3 p-3">
+                                                <div className="col-span-1 grid gap-2">
+                                                    <Label>HR</Label>
+                                                    <Input />
+                                                </div>
+                                                <div className="col-span-1 grid gap-2">
+                                                    <Label>BP</Label>
+                                                    <Input />
+                                                </div>
+                                                <div className="col-span-1 grid gap-2">
+                                                    <Label>Temp</Label>
+                                                    <Input />
+                                                </div>
+                                                <div className="col-span-1 grid gap-2">
+                                                    <Label>RR</Label>
+                                                    <Input />
+                                                </div>
+                                                <div className="col-span-1 grid gap-2">
+                                                    <Label>O2 Sat</Label>
+                                                    <Input />
+                                                </div>
+                                                <div className="col-span-1 grid gap-2">
+                                                    <Label>Pain</Label>
+                                                    <Input />
+                                                </div>
+                                                <div className="col-span-full grid gap-2 py-2">
+                                                    <Button size={"lg"} className="">Copy</Button>
+                                                </div>
+
+                                            </div>
                                         </AccordionContent>
                                     </AccordionItem>
                                 </Accordion>

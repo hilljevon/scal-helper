@@ -74,6 +74,7 @@ export function DataTable<TData, TValue>({ columns, data, }: DataTableProps<TDat
             rowSelection,
         }
     })
+    // Everytime a row selection is picked, we update state to reflect current selected facilities since row selection only stores an index.
     React.useEffect(() => {
         if (rowSelection && Object.keys(rowSelection).length > 0) {
             const allSelectedFacilities = []

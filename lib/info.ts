@@ -42,6 +42,5 @@ export const uaInfo = [
         desc: HomeFacilityOutpatient.map((facility) => (
             { title: facility.name, desc: facility.homeInfusion }
         ))
-    }
-
+    },
 ]
