@@ -62,6 +62,7 @@ const formSchema = z.object({
     mrn: z.string()
 })
 const dummyEngagementNoteData = [
+    "",
     "Bed Lv Req’ed: tele Transport Lv Req’ed: als Equip needed: monitor, oxygen prn IVF/Drips: none Current Bed Level: med surg Current RM: 2114 Unit phone#: 919 336 5502 x2147 Fax#: NKF MD name: dr francis NKF MD phone #: 714 551 0992 Transfer Dx: s/p glioblastoma resection COVID status: not done Test Date (if applicable): Sitter/Restraints:n Iso (Y/N): Droplet ISO If yes, specify: Rhinovirus  Code status: full Ht: 5ft 10in Wt: 109 lbs",
     "Bed Lv Req’ed: ICU Transport Lv Req’ed: CCT-RN Equip needed: monitor, mask IVF/Drips: heparin gtt 5cc/hr Current Bed Level: ICU Current RM: 5223 Unit phone#: 646-442-2214 Fax#: NKF MD name: dr Smith NKF MD phone #: 949-324-2147 Transfer Dx: SEPSIS, COVID COVID status: Positive Test Date(if applicable): 10 / 14 Sitter / Restraints:Bilateral wrist restraints Iso (Y/N): Y If yes, specify: COVID Code status: DNR / DNI Ht: 170cm Wt: 57kg",
     "Bed Lv Req’ed: DOU Transport Lv Req’ed: BLS Equip needed: Cardiac Monitor IVF/Drips: Normal saline Current Bed Level: Tele Current RM: 1234 Unit phone#: 714-768-2944 Fax#: 714-888-4563 NKF MD name: dr Silvia Martinez NKF MD phone #: 949-324-2147 Transfer Dx: Failure to thrive COVID status: negative Test Date(if applicable): 10 / 14 Sitter / Restraints: Sitter Bilateral wrist restraints Iso (Y/N): N If yes, specify: Code status: DNR / DNI Ht: 170cm Wt: 57kg"
@@ -118,7 +119,7 @@ export function ValidatedMainPage() {
         )
     }
     const toggleEngagementNote = () => {
-        setActiveEngagementNote((prevInt) => (prevInt + 1) % 3)
+        setActiveEngagementNote((prevInt) => (prevInt + 1) % 4)
         form.setValue("engagementNote", dummyEngagementNoteData[activeEngagementNote])
     }
     return (
@@ -301,7 +302,12 @@ export function ValidatedMainPage() {
                                     <div className="flex w-full rounded-md border border-neutral-200 bg-transparent px-3 py-2 shadow-sm placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300 min-h-[24rem] min-w-[4rem] text-xs">
                                         {caseData && (
                                             <p className="text-base">
-                                                One Touch Template <br /> <br />  Name:  <span className="text-red-600">{generalData.patientName} </span> <br />
+                                                ** One Touch **
+                                                <br />
+                                                New OURS Bed Request
+                                                <br />
+                                                <br />
+                                                Name:  <span className="text-red-600">{generalData.patientName} </span> <br />
                                                 MRN: <span className="text-red-600">{generalData.mrn} </span> <br />
                                                 {/* May need to create conditional */}
                                                 Dx: <span className="text-red-600"> {caseData["Transfer Dx"]} </span>  <br />
@@ -316,10 +322,11 @@ export function ValidatedMainPage() {
                                                 {/* May need to create conditional */}
                                                 Weight: <span className="text-red-600">{caseData["Wt"]} </span> <br />
                                                 {/* May need to create conditional */}
-                                                Bed Lvl: <span className="text-red-600">{caseData["Bed Lv Req’ed"]}</span> <br /> <br />
-                                                UA: <span className="text-red-600"> Jevon H </span><br />
-                                                RN:  <span className="text-red-600">{generalData.rnCaseManager} </span> <br /> <br />
-                                                If you can accept the patient, please reply "Accept"
+                                                Bed Level Request: <span className="text-red-600">{caseData["Bed Lv Req’ed"]}</span> <br /> <br />
+                                                CM Name:  <span className="text-red-600">{generalData.rnCaseManager} </span> <br />
+                                                UA Name: <span className="text-red-600"> Jevon H </span><br /> <br />
+                                                If you can accept the patient, please reply "Accept". If you need additional clarifciation, the OURS Physician Advisor will call you back at your cell phone number unless you provide another number. <br />
+                                                Thank you.
                                             </p>
                                         )}
                                     </div>
@@ -336,6 +343,15 @@ export function ValidatedMainPage() {
                                             <span className="font-extrabold">3. </span> Send cortext to OURS One Touch group, MD on call, OURS physician, and OURS CM. <br />
                                             <span className="font-extrabold">4. </span> Confirm MD accept + bed. <br />
                                             <span className="font-extrabold">5. </span> Tx checkoff list + vital signs.
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                </Accordion>
+                                <Accordion type="single" collapsible>
+                                    <AccordionItem value="item-1">
+                                        <AccordionTrigger>Cortext Intro</AccordionTrigger>
+                                        <AccordionContent className="text-xs">
+                                            Hi team this is jevon from OURS. May I pls request for pt below? TYSM
+                                            <br />
                                         </AccordionContent>
                                     </AccordionItem>
                                 </Accordion>
@@ -394,13 +410,12 @@ export function ValidatedMainPage() {
                                             <p className="text-lg">
                                                 Timeout with <span className="text-blue-600"> {generalData.rnCaseManager} </span> on
                                                 <span className="text-blue-600"> {generalData.patientName} ({generalData["mrn"]}) </span> <br /> <br />
-                                                Going to Kaiser <span className="text-blue-600"> {currentFacility ? (<p className="inline-block">{currentFacility.name}</p>) : (<p className="inline-block">XXX</p>)} </span>
-                                                Room XXX, Report XXX, Pickup at XXX. Level of Care: <p className="inline-block">{caseData["Bed Lv Req’ed"]}</p> <br />
-                                                Transport Lv: <span className="text-blue-600"> {caseData["Transport Lv Req’d"]} </span>,
+                                                Going to Kaiser <span className="text-blue-600"> {currentFacility ? (<p className="inline-block">{currentFacility.name}</p>) : (<p className="inline-block">XXX</p>)} </span>  Accepting: Dr. <span className="text-blue-600">XXX</span> Room XXX, Report XXX, Pickup at XXX. Level of Care: <p className="inline-block">{caseData["Bed Lv Req’ed"]}</p> <br />
+                                                Transport Lv: <span className="text-blue-600"> {caseData["Transport Lv Req’ed"]} </span>,
                                                 Equip Needed: <span className="text-blue-600"> {caseData["Equip. needed"]} </span> <br />
                                                 Dx: <span className="text-blue-600"> {caseData["Transfer Dx"]} </span>,
                                                 IVF/Drips: <span className="text-blue-600"> {caseData["IVF/Drips"]} </span>,
-                                                COVID status: <span className="text-blue-600"> {caseData["COVID status"]} </span> <br />
+                                                COVID status: <span className="text-blue-600"> {caseData["COVID status"]} </span>
                                                 Sitter/Restraints: <span className="text-blue-600"> {caseData["Sitter/Restraints"]} </span>,
                                                 Iso: <span className="text-blue-600">{caseData["Iso (Y/N)"]} {caseData["If yes, specify"]} </span> ,
                                                 Code Status: <span className="text-blue-600"> {caseData["Code status"]} </span> <br /> <br />
