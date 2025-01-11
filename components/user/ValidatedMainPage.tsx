@@ -67,6 +67,11 @@ const dummyEngagementNoteData = [
     "Bed Lv Req’ed: ICU Transport Lv Req’ed: CCT-RN Equip needed: monitor, mask IVF/Drips: heparin gtt 5cc/hr Current Bed Level: ICU Current RM: 5223 Unit phone#: 646-442-2214 Fax#: NKF MD name: dr Smith NKF MD phone #: 949-324-2147 Transfer Dx: SEPSIS, COVID COVID status: Positive Test Date(if applicable): 10 / 14 Sitter / Restraints:Bilateral wrist restraints Iso (Y/N): Y If yes, specify: COVID Code status: DNR / DNI Ht: 170cm Wt: 57kg",
     "Bed Lv Req’ed: DOU Transport Lv Req’ed: BLS Equip needed: Cardiac Monitor IVF/Drips: Normal saline Current Bed Level: Tele Current RM: 1234 Unit phone#: 714-768-2944 Fax#: 714-888-4563 NKF MD name: dr Silvia Martinez NKF MD phone #: 949-324-2147 Transfer Dx: Failure to thrive COVID status: negative Test Date(if applicable): 10 / 14 Sitter / Restraints: Sitter Bilateral wrist restraints Iso (Y/N): N If yes, specify: Code status: DNR / DNI Ht: 170cm Wt: 57kg"
 ]
+interface generalDataInterface {
+    patientName: string,
+    rnCaseManager: string,
+    mrn: string
+}
 export function ValidatedMainPage() {
     const [activeEngagementNote, setActiveEngagementNote] = useState(0)
     // default form for engagement 
@@ -84,7 +89,7 @@ export function ValidatedMainPage() {
     // case data will eventually be set to all the clinical patient info
     const [caseData, setCaseData] = useState<any>(null)
     // General data pertains to all info that is not included in the original engagement note
-    const [generalData, setGeneralData] = useState<any>({
+    const [generalData, setGeneralData] = useState<generalDataInterface>({
         patientName: "",
         rnCaseManager: "",
         mrn: ""
@@ -356,7 +361,7 @@ export function ValidatedMainPage() {
                                     </AccordionItem>
                                 </Accordion>
                             </div>
-                            <div className="col-span-full">
+                            {/* <div className="col-span-full">
                                 <Accordion type="single" collapsible>
                                     <AccordionItem value="item-2">
                                         <AccordionTrigger>Vital Signs Template</AccordionTrigger>
@@ -394,7 +399,7 @@ export function ValidatedMainPage() {
                                         </AccordionContent>
                                     </AccordionItem>
                                 </Accordion>
-                            </div>
+                            </div> */}
                         </fieldset>
                     </form>
                 </div>
@@ -410,9 +415,9 @@ export function ValidatedMainPage() {
                                             <p className="text-lg">
                                                 Timeout with <span className="text-blue-600"> {generalData.rnCaseManager} </span> on
                                                 <span className="text-blue-600"> {generalData.patientName} ({generalData["mrn"]}) </span> <br /> <br />
-                                                Going to Kaiser <span className="text-blue-600"> {currentFacility ? (<p className="inline-block">{currentFacility.name}</p>) : (<p className="inline-block">XXX</p>)} </span>  Accepting: Dr. <span className="text-blue-600">XXX</span> Room XXX, Report XXX, Pickup at XXX. Level of Care: <p className="inline-block">{caseData["Bed Lv Req’ed"]}</p> <br />
+                                                Going to Kaiser <span className="text-blue-600"> {currentFacility ? (<p className="inline-block">{currentFacility.name}</p>) : (<p className="inline-block">XXX</p>)} </span>  Accepting: Dr. <span className="text-blue-600">XXX</span> Room XXX, Report XXX, Pickup at XXX. Level of Care: <p className="inline-block">{caseData["Bed Lv Req’ed"]}</p> <br /> <br />
                                                 Transport Lv: <span className="text-blue-600"> {caseData["Transport Lv Req’ed"]} </span>,
-                                                Equip Needed: <span className="text-blue-600"> {caseData["Equip. needed"]} </span> <br />
+                                                Equip Needed: <span className="text-blue-600"> {caseData["Equip. needed"]} </span> <br /> <br />
                                                 Dx: <span className="text-blue-600"> {caseData["Transfer Dx"]} </span>,
                                                 IVF/Drips: <span className="text-blue-600"> {caseData["IVF/Drips"]} </span>,
                                                 COVID status: <span className="text-blue-600"> {caseData["COVID status"]} </span>
@@ -440,6 +445,22 @@ export function ValidatedMainPage() {
                                             <span className="font-extrabold">3. </span> Notify BUC of accepting MD. <br />
                                             <span className="font-extrabold">4. </span> Tx checkoff list. <br />
                                             <span className="font-extrabold">5. </span> Once bed info provided, set up vectorcare + vitals.
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                </Accordion>
+                            </div>
+                            <div className="col-span-full">
+                                <Accordion type="single" collapsible>
+                                    <AccordionItem value="item-1">
+                                        <AccordionTrigger>Regular Cortext</AccordionTrigger>
+                                        <AccordionContent className="text-xs">
+
+                                            Hello, you have an OURS Patient to review in KPHC: <br /> <br />
+                                            Patient Name:  <span className="font-extrabold text-blue-600">{generalData.patientName} </span>  <br />
+                                            Patient MRN: <span className="font-extrabold text-blue-600"> {generalData.mrn} </span><br /> <br />
+                                            <span className="font-extrabold text-blue-600">{caseData && caseData["Bed Lv Req’ed"]}</span> Bed Type has been requested at KP <span className="font-extrabold text-blue-600">{currentFacility?.name} </span><br /> <br />
+                                            If you accept this patient, please reply ACCEPT. If you need additional clarification, the OURS Physician Advisor will call you back at your cell phone number unless you provide another number. <br /> <br />
+                                            Thank you.
                                         </AccordionContent>
                                     </AccordionItem>
                                 </Accordion>
