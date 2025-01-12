@@ -427,8 +427,7 @@ export function ValidatedMainPage() {
                                                 Leaving: <span className="text-pink-600"> {nkf ? (<p className="inline-block">{nkf.name}</p>) : (<p className="inline-block">XXX</p>)} </span>,
                                                 <span className="text-pink-600">{caseData["Current Bed Level"]} </span>
                                                 <span className="text-pink-600">{caseData["Current RM"]} </span>,
-                                                Unit:  <span className="text-pink-600">{caseData["Unit phone#"]} </span> <br />
-                                                Ht: {caseData["Ht"]}, Wt: {caseData["Wt"]}
+                                                Unit:  <span className="text-pink-600">{caseData["Unit phone#"]} </span> Ht: {caseData["Ht"]}, Wt: {caseData["Wt"]}
                                             </p>
                                         )}
                                     </div>
@@ -456,9 +455,9 @@ export function ValidatedMainPage() {
                                         <AccordionContent className="text-xs">
 
                                             Hello, you have an OURS Patient to review in KPHC: <br /> <br />
-                                            Patient Name:  <span className="font-extrabold text-blue-600">{generalData.patientName} </span>  <br />
-                                            Patient MRN: <span className="font-extrabold text-blue-600"> {generalData.mrn} </span><br /> <br />
-                                            <span className="font-extrabold text-blue-600">{caseData && caseData["Bed Lv Req’ed"]}</span> Bed Type has been requested at KP <span className="font-extrabold text-blue-600">{currentFacility?.name} </span><br /> <br />
+                                            Patient Name:  <span className="font-bold text-blue-600">{generalData.patientName} </span>  <br />
+                                            Patient MRN: <span className="font-bold text-blue-600"> {generalData.mrn} </span><br /> <br />
+                                            <span className="font-bold text-blue-600">{caseData && caseData["Bed Lv Req’ed"]}</span> Bed Type has been requested at KP <span className="font-bold text-blue-600">{currentFacility?.name} </span><br /> <br />
                                             If you accept this patient, please reply ACCEPT. If you need additional clarification, the OURS Physician Advisor will call you back at your cell phone number unless you provide another number. <br /> <br />
                                             Thank you.
                                         </AccordionContent>
