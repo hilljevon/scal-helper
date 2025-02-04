@@ -60,8 +60,7 @@ const formSchema = z.object({
     homeFacility: z.string(),
     nkf: z.string(),
     mrn: z.string(),
-    mtt: z.string(),
-    medicalHome: z.string()
+    UAName: z.string().optional()
 })
 const dummyEngagementNoteData = [
     "",
@@ -73,8 +72,7 @@ interface generalDataInterface {
     patientName: string,
     rnCaseManager: string,
     mrn: string,
-    mtt: string,
-    medicalHome: string
+    UAName: string
 }
 export function ValidatedMainPage() {
     const [activeEngagementNote, setActiveEngagementNote] = useState(0)
@@ -97,8 +95,7 @@ export function ValidatedMainPage() {
         patientName: "",
         rnCaseManager: "",
         mrn: "",
-        mtt: "",
-        medicalHome: ""
+        UAName: ""
     })
     // THIS IS THE HOME FACILITY
     const [currentFacility, setCurrentFacility] = useState<HomeFacilityType | null>(null)
@@ -112,6 +109,7 @@ export function ValidatedMainPage() {
         const matchedFacility = HomeFacilities.find(facility => facility.name == values.homeFacility)
         // populate the NKF info that user selects
         const matchedNkf = facilities.find(nkf => nkf.name == values.nkf)
+        const UA = values.UAName ? values.UAName : ""
         // generate our case data as the new case info object
         setCaseData(filteredEngagementNote)
         // all other case info not included in the engagement note that user inputs
@@ -119,8 +117,7 @@ export function ValidatedMainPage() {
             patientName: values.patientName,
             rnCaseManager: values.rnName,
             mrn: values.mrn,
-            mtt: values.mtt,
-            medicalHome: values.medicalHome
+            UAName: UA
         })
         // if matched facility found, set currentFacility to such
         matchedFacility && (
@@ -177,14 +174,14 @@ export function ValidatedMainPage() {
                     <Form {...form} >
                         <form onSubmit={form.handleSubmit(onEngagementNoteSubmit)} className="grid w-full items-start gap-6">
                             <div className="grid grid-cols-2 gap-3 text-sm">
-                                {/* PATIENT NAME FORM */}
-                                <div className="grid gap-3">
+                                {/* UA NAME FORM */}
+                                <div className="grid gap-3 col-span-1">
                                     <FormField
                                         control={form.control}
-                                        name="patientName"
+                                        name="UAName"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <Label htmlFor="patientName">Patient Name</Label>
+                                                <Label htmlFor="patientName">UA</Label>
                                                 <FormControl>
                                                     <Input id="patientName" type="" {...field} />
                                                 </FormControl>
@@ -193,7 +190,7 @@ export function ValidatedMainPage() {
                                     />
                                 </div>
                                 {/* RN FORM */}
-                                <div className="grid gap-3">
+                                <div className="grid gap-3 col-span-1">
                                     <FormField
                                         control={form.control}
                                         name="rnName"
@@ -207,8 +204,23 @@ export function ValidatedMainPage() {
                                         )}
                                     />
                                 </div>
+                                {/* PATIENT NAME FORM */}
+                                <div className="grid gap-3 col-span-1">
+                                    <FormField
+                                        control={form.control}
+                                        name="patientName"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <Label htmlFor="patientName">Patient Name</Label>
+                                                <FormControl>
+                                                    <Input id="patientName" type="" {...field} />
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
                                 {/* MRN FORM */}
-                                <div className="col-span-full">
+                                <div className="col-span-1">
                                     <FormField
                                         control={form.control}
                                         name="mrn"
@@ -218,6 +230,30 @@ export function ValidatedMainPage() {
                                                 <FormControl>
                                                     <Input id="mrn" type="" placeholder="" {...field} />
                                                 </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                {/* NKF FORM */}
+                                <div className="col-span-full">
+                                    <FormField
+                                        control={form.control}
+                                        name="nkf"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>NKF</FormLabel>
+                                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                    <FormControl>
+                                                        <SelectTrigger>
+                                                            <SelectValue placeholder="Select a NKF" />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        {facilities.map((facility) => (
+                                                            <SelectItem value={facility.name} key={facility.name}> <span className="underline">{facility.name} </span> - {facility.address.substring(0, 28)} ... </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
                                             </FormItem>
                                         )}
                                     />
@@ -247,7 +283,7 @@ export function ValidatedMainPage() {
                                     />
                                 </div>
                                 {/* MTT */}
-                                <div className="col-span-1">
+                                {/* <div className="col-span-1">
                                     <FormField
                                         control={form.control}
                                         name="mtt"
@@ -270,7 +306,6 @@ export function ValidatedMainPage() {
                                         )}
                                     />
                                 </div>
-                                {/* MEDICAL HOME */}
                                 <div className="col-span-1">
                                     <FormField
                                         control={form.control}
@@ -293,31 +328,8 @@ export function ValidatedMainPage() {
                                             </FormItem>
                                         )}
                                     />
-                                </div>
-                                {/* NKF FORM */}
-                                <div className="col-span-full">
-                                    <FormField
-                                        control={form.control}
-                                        name="nkf"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>NKF</FormLabel>
-                                                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                                    <FormControl>
-                                                        <SelectTrigger>
-                                                            <SelectValue placeholder="Select a NKF" />
-                                                        </SelectTrigger>
-                                                    </FormControl>
-                                                    <SelectContent>
-                                                        {facilities.map((facility) => (
-                                                            <SelectItem value={facility.name} key={facility.name}> <span className="underline">{facility.name} </span> - {facility.address.substring(0, 28)} ... </SelectItem>
-                                                        ))}
-                                                    </SelectContent>
-                                                </Select>
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
+                                </div> */}
+
                             </div>
                             {/* ENGAGEMENT NOTE FORM */}
                             <FormField
@@ -382,16 +394,17 @@ export function ValidatedMainPage() {
                                                 Sitter/Restraints: <span className="text-red-600">{caseData["Sitter/Restraints"]} </span><br />
                                                 Iso: <span className="text-red-600">{caseData["Iso (Y/N)"]} {caseData["If yes, specify"]}  </span> <br />
                                                 Code Status: <span className="text-red-600">{caseData["Code status"]} </span> <br />
-                                                MTT:  <span className="text-red-600">{generalData.mtt} </span> <br />
-                                                Medical Home:  <span className="text-red-600">{generalData.medicalHome} </span> <br />
                                                 {/* May need to create conditional */}
                                                 Height: <span className="text-red-600">{caseData["Ht"]} </span> <br />
                                                 {/* May need to create conditional */}
                                                 Weight: <span className="text-red-600">{caseData["Wt"]} </span> <br />
                                                 {/* May need to create conditional */}
-                                                Bed Level Request: <span className="text-red-600">{caseData["Bed Lv Req’ed"]}</span> <br /> <br />
+                                                Bed Level Request: <span className="text-red-600">{caseData["Bed Lv Req’ed"]}</span>
+                                                {/* MTT:  <span className="text-red-600">{generalData.mtt} </span> <br />
+                                                Medical Home:  <span className="text-red-600">{generalData.medicalHome} </span> <br /> */}
+                                                <br /> <br />
                                                 CM Name:  <span className="text-red-600">{generalData.rnCaseManager} </span> <br />
-                                                UA Name: <span className="text-red-600"> Jevon H </span><br /> <br />
+                                                UA Name: <span className="text-red-600"> {generalData.UAName} </span><br /> <br />
                                                 If you can accept the patient, please reply "Accept". If you need additional clarifciation, the OURS Physician Advisor will call you back at your cell phone number unless you provide another number. <br />
                                                 Thank you.
                                             </p>
