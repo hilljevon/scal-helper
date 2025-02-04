@@ -129,7 +129,7 @@ export function ValidatedMainPage() {
     }
     return (
         <>
-            <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
+            <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-white px-4">
                 <h1 className="text-xl font-semibold">Transfer tool</h1>
                 <div className='flex mx-auto'>
                     <div className="relative hidden flex-col items-start gap-8 md:flex">
@@ -139,14 +139,26 @@ export function ValidatedMainPage() {
                                     {currentFacility && (
                                         <Breadcrumb>
                                             <BreadcrumbList>
-                                                <BreadcrumbItem>
+                                                {/* <BreadcrumbItem>
                                                     <span className=" text-purple-500">BUC: </span> {currentFacility.buc}
                                                 </BreadcrumbItem>
                                                 <BreadcrumbSeparator />
                                                 <BreadcrumbItem>
                                                     <span className="text-green-500">MOD: </span> {currentFacility.modName[0]}
                                                 </BreadcrumbItem>
+                                                <BreadcrumbSeparator /> */}
+                                                <BreadcrumbItem>
+                                                    <span className="text-yellow-700">Closest Facilities: </span>
+                                                </BreadcrumbItem>
                                                 <BreadcrumbSeparator />
+                                                {currentFacility.closestFacilities.map((facility, idx) => (
+                                                    <>
+                                                        <BreadcrumbItem>
+                                                            <span className="font-extrabold"> {idx + 1}. </span>{facility}
+                                                        </BreadcrumbItem>
+                                                        <BreadcrumbSeparator />
+                                                    </>
+                                                ))}
                                             </BreadcrumbList>
                                         </Breadcrumb>
                                     )}
@@ -339,6 +351,22 @@ export function ValidatedMainPage() {
                             </div>
                             <div className="col-span-full">
                                 <Accordion type="single" collapsible>
+                                    <AccordionItem value="item-2">
+                                        <AccordionTrigger>BUC</AccordionTrigger>
+                                        <AccordionContent className="text-xs">
+                                            {currentFacility?.buc}
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                </Accordion>
+                                <Accordion type="single" collapsible>
+                                    <AccordionItem value="item-2">
+                                        <AccordionTrigger>MOD</AccordionTrigger>
+                                        <AccordionContent className="text-xs">
+                                            {currentFacility?.modName}
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                </Accordion>
+                                <Accordion type="single" collapsible>
                                     <AccordionItem value="item-1">
                                         <AccordionTrigger>One Touch Process</AccordionTrigger>
                                         <AccordionContent className="text-xs">
@@ -348,15 +376,6 @@ export function ValidatedMainPage() {
                                             <span className="font-extrabold">3. </span> Send cortext to OURS One Touch group, MD on call, OURS physician, and OURS CM. <br />
                                             <span className="font-extrabold">4. </span> Confirm MD accept + bed. <br />
                                             <span className="font-extrabold">5. </span> Tx checkoff list + vital signs.
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                </Accordion>
-                                <Accordion type="single" collapsible>
-                                    <AccordionItem value="item-1">
-                                        <AccordionTrigger>Cortext Intro</AccordionTrigger>
-                                        <AccordionContent className="text-xs">
-                                            Hi team this is jevon from OURS. May I pls request for pt below? TYSM
-                                            <br />
                                         </AccordionContent>
                                     </AccordionItem>
                                 </Accordion>
@@ -436,21 +455,6 @@ export function ValidatedMainPage() {
                             <div className="col-span-full">
                                 <Accordion type="single" collapsible>
                                     <AccordionItem value="item-1">
-                                        <AccordionTrigger>Regular Process</AccordionTrigger>
-                                        <AccordionContent className="text-xs">
-                                            <span className="font-extrabold">1. </span> Check <span className="underline text-blue-600 hover:cursor-pointer">CEDOCS </span> to make sure facility is open <br />
-                                            <span className="font-extrabold">2. </span> Contact BUC {currentFacility?.buc} for ok to get accepting  <br />
-                                            <span className="font-extrabold">3. </span>If yes, cortext once summary is uploaded. <br />
-                                            <span className="font-extrabold">3. </span> Notify BUC of accepting MD. <br />
-                                            <span className="font-extrabold">4. </span> Tx checkoff list. <br />
-                                            <span className="font-extrabold">5. </span> Once bed info provided, set up vectorcare + vitals.
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                </Accordion>
-                            </div>
-                            <div className="col-span-full">
-                                <Accordion type="single" collapsible>
-                                    <AccordionItem value="item-1">
                                         <AccordionTrigger>Regular Cortext</AccordionTrigger>
                                         <AccordionContent className="text-xs">
 
@@ -464,6 +468,22 @@ export function ValidatedMainPage() {
                                     </AccordionItem>
                                 </Accordion>
                             </div>
+                            <div className="col-span-full">
+                                <Accordion type="single" collapsible>
+                                    <AccordionItem value="item-1">
+                                        <AccordionTrigger>Regular Process</AccordionTrigger>
+                                        <AccordionContent className="text-xs">
+                                            <span className="font-extrabold">1. </span> Check <span className="underline text-blue-600 hover:cursor-pointer">CEDOCS </span> to make sure facility is open <br />
+                                            <span className="font-extrabold">2. </span> Contact BUC {currentFacility?.buc} for ok to get accepting  <br />
+                                            <span className="font-extrabold">3. </span>If yes, cortext once summary is uploaded. <br />
+                                            <span className="font-extrabold">3. </span> Notify BUC of accepting MD. <br />
+                                            <span className="font-extrabold">4. </span> Tx checkoff list. <br />
+                                            <span className="font-extrabold">5. </span> Once bed info provided, set up vectorcare + vitals.
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                </Accordion>
+                            </div>
+
                         </fieldset>
                     </form>
                 </div>

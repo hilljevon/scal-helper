@@ -13,6 +13,7 @@ export type HomeFacilityType = {
     name: string,
     buc: string,
     modName: string[],
+    closestFacilities: string[]
 }
 export const facilities: FacilityType[] = [
     {
@@ -1326,88 +1327,105 @@ export const HomeFacilities: HomeFacilityType[] = [
     {
         name: "Anaheim",
         buc: "OC Bed Nurses",
-        modName: ['Care Without Delay', "Internal Medicine On Call - ANA"]
+        modName: ['Care Without Delay', "Internal Medicine On Call - ANA"],
+        closestFacilities: ["Downey", "Ontario", "Baldwin Park", "Habror City", "Los Angeles"]
     },
     {
         name: "Antelope Valley Medical Center",
         buc: "661-802-2300",
-        modName: ["Exchange Line"]
+        modName: ["Exchange Line"],
+        closestFacilities: ["Panorama City", "Woodland Hills", "Los Angeles", "West Los Angeles", "Fontana"]
     },
     {
         name: "Baldwin Park",
         buc: "BPK Bed Control",
-        modName: ['DOD']
+        modName: ['DOD'],
+        closestFacilities: ["Downey", "Los Angeles", "Ontario", "West Los Angeles", "Anaheim"]
     },
     {
         name: "Downey",
         buc: "Call BUC",
-        modName: ["Medical Consult"]
+        modName: ["Medical Consult"],
+        closestFacilities: ["Baldwin Park", "Harbor City", "Los Angeles", "Anaheim", "West Los Angeles"]
     },
     {
         name: "Fontana",
         buc: "SBC Bed Control",
-        modName: ['Care Without Delay Physician']
+        modName: ['Care Without Delay Physician'],
+        closestFacilities: ["Moreno Valley", "Baldwin Park", "Anaheim", "Downey", "Los Angeles"]
     },
     {
         name: "Harbor City (South Bay)",
         buc: "SB OURS One Touch",
-        modName: ['IOD']
+        modName: ['IOD'],
+        closestFacilities: ["Downey", "West Los Angeles", "Los Angeles", "Baldwin Park", "Anaheim"]
     },
     {
         name: "Irvine",
         buc: "OC Bed Nurses",
-        modName: ['Care Without Delay', "Internal Medicine On Call - ANA"]
+        modName: ['Care Without Delay', "Internal Medicine On Call - ANA"],
+        closestFacilities: ["Downey", "Riverside", "Harbor City", "Baldwin Park", "Ontario"]
     },
     {
         name: "Los Angeles",
         buc: "LAMC Throughput Bed 1",
-        modName: ['A.O.D Admitting DR']
+        modName: ['A.O.D Admitting DR'],
+        closestFacilities: ["West Los Angeles", "Panorama City", "Woodland Hills", "Baldwin Park", "Downey"]
     },
     {
         name: "Moreno Valley",
         buc: "Riverside CM Bed Coordinator",
-        modName: ['MVH IM/HMOD, ER MOD/R MOD', "MVH IM/IQM MD/CWD Advisor", "MVH IM/EPRP/Clinic/OURS"]
+        modName: ['MVH IM/HMOD, ER MOD/R MOD', "MVH IM/IQM MD/CWD Advisor", "MVH IM/EPRP/Clinic/OURS"],
+        closestFacilities: ["Fontana", "Anaheim", "Downey", "Baldwin Park"]
     },
     {
         name: "Ontario",
         buc: "SBC Bed Control",
-        modName: ['Care Without Delay Physician', "After 5pm: Hospital Medicine 1604 OMC"]
+        modName: ['Care Without Delay Physician', "After 5pm: Hospital Medicine 1604 OMC"],
+        closestFacilities: ["Moreno Valley", "Baldwin Park", "Anaheim", "Downey", "Los Angeles"]
     },
     {
         name: "Panorama City",
         buc: "PC House Supervisor 1",
-        modName: ['HOSP MOD Pgr 8172']
+        modName: ['HOSP MOD Pgr 8172'],
+        closestFacilities: ["Los Angeles", "Woodland Hills", "West Los Angeles", "Baldwin Park", "Downey"]
     },
     {
         name: "Riverside",
         buc: "Riverside CM Bed Coordinator",
-        modName: ['Riv IM/HMOD, ER MOD/R MOD', "Riv IM/IQM MD/CWD Advisor", "Riv IM/EPRP/Clinic/OURS"]
+        modName: ['Riv IM/HMOD, ER MOD/R MOD', "Riv IM/IQM MD/CWD Advisor", "Riv IM/EPRP/Clinic/OURS"],
+        closestFacilities: ["Fontana", "Anaheim", "Downey", "Baldwin Park"]
     },
     {
         name: "San Diego",
         buc: "SD Bed Control OURS Main",
-        modName: ['MOD SDMC 1']
+        modName: ['MOD SDMC 1'],
+        closestFacilities: ["Irvine", "Riverside", "Fontana", "Downey"]
     },
     {
         name: "San Marcos",
         buc: "SD Bed Control OURS Main",
-        modName: ['MOD SMMC 1']
+        modName: ['MOD SMMC 1'],
+        closestFacilities: ["Irvine", "Riverside", "Fontana", "Downey"]
     },
     {
         name: "West Los Angeles",
         buc: "WLA BUC",
-        modName: ["MOD/Hospitalist"]
+        modName: ["MOD/Hospitalist"],
+        closestFacilities: ["Los Angeles", "Panorama City", "Woodland Hills", "Harbor City", "Downey"]
     },
     {
         name: "Woodland Hills",
         buc: "WH Bed Board Coordinators",
-        modName: ["HOD Consult / HOD Cross Over"]
+        modName: ["HOD Consult / HOD Cross Over"],
+        closestFacilities: ["Panorama City", "Los Angeles", "West Los Angeles", "Baldwin Park", "Harbor City"]
     },
 
     {
         name: "Zion",
         buc: "SD Bed Control OURS Main",
-        modName: ['MOD Zion 1']
+        modName: ['MOD Zion 1'],
+        closestFacilities: ["Irvine", "Riverside", "Fontana", "Downey"]
     },
 ]
 
