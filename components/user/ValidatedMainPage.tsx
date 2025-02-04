@@ -59,7 +59,9 @@ const formSchema = z.object({
     rnName: z.string(),
     homeFacility: z.string(),
     nkf: z.string(),
-    mrn: z.string()
+    mrn: z.string(),
+    mtt: z.string(),
+    medicalHome: z.string()
 })
 const dummyEngagementNoteData = [
     "",
@@ -70,7 +72,9 @@ const dummyEngagementNoteData = [
 interface generalDataInterface {
     patientName: string,
     rnCaseManager: string,
-    mrn: string
+    mrn: string,
+    mtt: string,
+    medicalHome: string
 }
 export function ValidatedMainPage() {
     const [activeEngagementNote, setActiveEngagementNote] = useState(0)
@@ -92,7 +96,9 @@ export function ValidatedMainPage() {
     const [generalData, setGeneralData] = useState<generalDataInterface>({
         patientName: "",
         rnCaseManager: "",
-        mrn: ""
+        mrn: "",
+        mtt: "",
+        medicalHome: ""
     })
     // THIS IS THE HOME FACILITY
     const [currentFacility, setCurrentFacility] = useState<HomeFacilityType | null>(null)
@@ -112,7 +118,9 @@ export function ValidatedMainPage() {
         setGeneralData({
             patientName: values.patientName,
             rnCaseManager: values.rnName,
-            mrn: values.mrn
+            mrn: values.mrn,
+            mtt: values.mtt,
+            medicalHome: values.medicalHome
         })
         // if matched facility found, set currentFacility to such
         matchedFacility && (
@@ -139,14 +147,6 @@ export function ValidatedMainPage() {
                                     {currentFacility && (
                                         <Breadcrumb>
                                             <BreadcrumbList>
-                                                {/* <BreadcrumbItem>
-                                                    <span className=" text-purple-500">BUC: </span> {currentFacility.buc}
-                                                </BreadcrumbItem>
-                                                <BreadcrumbSeparator />
-                                                <BreadcrumbItem>
-                                                    <span className="text-green-500">MOD: </span> {currentFacility.modName[0]}
-                                                </BreadcrumbItem>
-                                                <BreadcrumbSeparator /> */}
                                                 <BreadcrumbItem>
                                                     <span className="text-yellow-700">Closest Facilities: </span>
                                                 </BreadcrumbItem>
@@ -229,11 +229,59 @@ export function ValidatedMainPage() {
                                         name="homeFacility"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Home Facility</FormLabel>
+                                                <FormLabel>Going To</FormLabel>
                                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                     <FormControl>
                                                         <SelectTrigger>
                                                             <SelectValue placeholder="Select a facility" />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        {HomeFacilities.map((facility) => (
+                                                            <SelectItem value={facility.name} key={facility.name}>{facility.name}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                {/* MTT */}
+                                <div className="col-span-1">
+                                    <FormField
+                                        control={form.control}
+                                        name="mtt"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>MTT</FormLabel>
+                                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                    <FormControl>
+                                                        <SelectTrigger>
+                                                            <SelectValue placeholder="MTT" />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        {HomeFacilities.map((facility) => (
+                                                            <SelectItem value={facility.name} key={facility.name}>{facility.name}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                {/* MEDICAL HOME */}
+                                <div className="col-span-1">
+                                    <FormField
+                                        control={form.control}
+                                        name="medicalHome"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Medical Home</FormLabel>
+                                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                    <FormControl>
+                                                        <SelectTrigger>
+                                                            <SelectValue placeholder="Medical Home" />
                                                         </SelectTrigger>
                                                     </FormControl>
                                                     <SelectContent>
@@ -334,6 +382,8 @@ export function ValidatedMainPage() {
                                                 Sitter/Restraints: <span className="text-red-600">{caseData["Sitter/Restraints"]} </span><br />
                                                 Iso: <span className="text-red-600">{caseData["Iso (Y/N)"]} {caseData["If yes, specify"]}  </span> <br />
                                                 Code Status: <span className="text-red-600">{caseData["Code status"]} </span> <br />
+                                                MTT:  <span className="text-red-600">{generalData.mtt} </span> <br />
+                                                Medical Home:  <span className="text-red-600">{generalData.medicalHome} </span> <br />
                                                 {/* May need to create conditional */}
                                                 Height: <span className="text-red-600">{caseData["Ht"]} </span> <br />
                                                 {/* May need to create conditional */}
