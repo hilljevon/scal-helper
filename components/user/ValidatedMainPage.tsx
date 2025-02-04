@@ -443,10 +443,18 @@ export function ValidatedMainPage() {
                                                 Sitter/Restraints: <span className="text-blue-600"> {caseData["Sitter/Restraints"]} </span>,
                                                 Iso: <span className="text-blue-600">{caseData["Iso (Y/N)"]} {caseData["If yes, specify"]} </span> ,
                                                 Code Status: <span className="text-blue-600"> {caseData["Code status"]} </span> <br /> <br />
-                                                Leaving: <span className="text-pink-600"> {nkf ? (<p className="inline-block">{nkf.name}</p>) : (<p className="inline-block">XXX</p>)} </span>,
+                                                Leaving:{nkf ? (
+                                                    <>
+                                                        <span className="text-pink-600">
+                                                            <p className="inline-block">{nkf.name}
+                                                            </p>
+                                                        </span>
+
+                                                    </>
+                                                ) : (<p className="inline-block">XXX</p>)} ,
                                                 <span className="text-pink-600">{caseData["Current Bed Level"]} </span>
                                                 <span className="text-pink-600">{caseData["Current RM"]} </span>,
-                                                Unit:  <span className="text-pink-600">{caseData["Unit phone#"]} </span> Ht: {caseData["Ht"]}, Wt: {caseData["Wt"]}
+                                                Unit:  <span className="text-pink-600">{caseData["Unit phone#"]} </span> Ht: {caseData["Ht"]}, Wt: {caseData["Wt"]}; Address:  <span className="text-pink-600"> {nkf?.address} </span>
                                             </p>
                                         )}
                                     </div>
