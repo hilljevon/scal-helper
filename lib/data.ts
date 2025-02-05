@@ -1304,6 +1304,17 @@ export const facilities: FacilityType[] = [
         caseManagementFax: "",
         urReviewFax: "818-902-3944",
     },
+    {
+        name: "Whittier Hospital Medical Center",
+        address: "9080 Colima Rd Whitter CA 90605",
+        mainline: "562-945-3561",
+        caseManagement: "",
+        medicalRecords: "",
+        urReview: "562-907-1629",
+        admitting: "",
+        caseManagementFax: "",
+        urReviewFax: "562-907-1717",
+    },
     // {
     //     name: "",
     //     address: "",

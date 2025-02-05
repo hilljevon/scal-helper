@@ -329,7 +329,6 @@ export function ValidatedMainPage() {
                                         )}
                                     />
                                 </div> */}
-
                             </div>
                             {/* ENGAGEMENT NOTE FORM */}
                             <FormField
