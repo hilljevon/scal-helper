@@ -45,6 +45,7 @@ import { handleEngagementNote, test2 } from "@/lib/handleTransferData"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { facilities, FacilityType, HomeFacilities, HomeFacilityType } from "@/lib/data"
+import MisrepatTemplate from "./MisrepatTemplate"
 type GeneralDataInterface = {
     patientName: string,
     rnCaseManager: string,
@@ -442,6 +443,18 @@ export function ValidatedMainPage() {
                                     </AccordionItem>
                                 </Accordion>
                             </div>
+                            <div className="col-span-full">
+                                <Accordion type="single" collapsible>
+                                    <AccordionItem value="item-1">
+                                        <AccordionTrigger>Misrepat Template</AccordionTrigger>
+                                        <AccordionContent className="text-xs">
+                                            {currentFacility && (
+                                                <MisrepatTemplate generalData={generalData} caseData={caseData} currentFacility={currentFacility} />
+                                            )}
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                </Accordion>
+                            </div>
                             {/* <div className="col-span-full">
                                 <Accordion type="single" collapsible>
                                     <AccordionItem value="item-2">
@@ -557,7 +570,18 @@ export function ValidatedMainPage() {
                         </fieldset>
                     </form>
                 </div>
-
+                {/* <div className="col-span-full">
+                    <Accordion type="single" collapsible>
+                        <AccordionItem value="item-1">
+                            <AccordionTrigger>Misrepat Template</AccordionTrigger>
+                            <AccordionContent className="max-h-[800px] transition-all duration-500 ease-in-out p-6 bg-gray-50">
+                                {currentFacility && (
+                                    <MisrepatTemplate generalData={generalData} caseData={caseData} currentFacility={currentFacility} />
+                                )}
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </div> */}
             </main>
         </>
     )
