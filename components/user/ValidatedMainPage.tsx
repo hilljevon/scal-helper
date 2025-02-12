@@ -577,8 +577,8 @@ export function ValidatedMainPage() {
                                     <AccordionItem value="item-1">
                                         <AccordionTrigger className="text-orange-700">Useful Links</AccordionTrigger>
                                         <AccordionContent className="text-xs">
-                                            <a className="text-blue-500 underline hover:text-blue-700" href="https://scaloncall.kp.org">SCAL On Call</a> <br /> <br />
-                                            <a className="text-blue-500 underline hover:text-blue-700" href="https://ccclivecensus.dbb.ca.kp.org/MCCapacityStatus/">CEDOCS</a>
+                                            <a target="_blank" rel="noopener noreferrer" className="text-blue-500 underline hover:text-blue-700" href="https://scaloncall.kp.org">SCAL On Call</a> <br /> <br />
+                                            <a target="_blank" rel="noopener noreferrer" className="text-blue-500 underline hover:text-blue-700" href="https://ccclivecensus.dbb.ca.kp.org/MCCapacityStatus/">CEDOCS</a>
                                         </AccordionContent>
                                     </AccordionItem>
                                 </Accordion>
