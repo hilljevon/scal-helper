@@ -572,22 +572,21 @@ export function ValidatedMainPage() {
                                     </AccordionItem>
                                 </Accordion>
                             </div>
-
+                            <div className="col-span-full">
+                                <Accordion type="single" collapsible>
+                                    <AccordionItem value="item-1">
+                                        <AccordionTrigger className="text-orange-700">Useful Links</AccordionTrigger>
+                                        <AccordionContent className="text-xs">
+                                            <a className="text-blue-500 underline hover:text-blue-700" href="https://scaloncall.kp.org">SCAL On Call</a> <br /> <br />
+                                            <a className="text-blue-500 underline hover:text-blue-700" href="https://ccclivecensus.dbb.ca.kp.org/MCCapacityStatus/">CEDOCS</a>
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                </Accordion>
+                            </div>
                         </fieldset>
                     </form>
                 </div>
-                {/* <div className="col-span-full">
-                    <Accordion type="single" collapsible>
-                        <AccordionItem value="item-1">
-                            <AccordionTrigger>Misrepat Template</AccordionTrigger>
-                            <AccordionContent className="max-h-[800px] transition-all duration-500 ease-in-out p-6 bg-gray-50">
-                                {currentFacility && (
-                                    <MisrepatTemplate generalData={generalData} caseData={caseData} currentFacility={currentFacility} />
-                                )}
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
-                </div> */}
+
             </main >
         </>
     )
