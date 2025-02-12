@@ -42,7 +42,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { handleEngagementNote, test2 } from "@/lib/handleTransferData"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
 import { facilities, FacilityType, HomeFacilities, HomeFacilityType } from "@/lib/data"
 import MisrepatTemplate from "./MisrepatTemplate"
@@ -133,6 +133,11 @@ export function ValidatedMainPage() {
         setActiveEngagementNote((prevInt) => (prevInt + 1) % 4)
         form.setValue("engagementNote", dummyEngagementNoteData[activeEngagementNote])
     }
+    useEffect(() => {
+        if (generalData.patientName.length > 1) {
+            document.title = `${generalData.patientName}`
+        }
+    }, [generalData])
     return (
         <>
             <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-white px-4">

@@ -39,6 +39,17 @@ export const facilities: FacilityType[] = [
         urReviewFax: "323-837-3408",
     },
     {
+        name: "Adventist Health White Memorial Montebello",
+        address: "309 W. Beverly Blvd Montebello CA 90640",
+        mainline: "323-726-1222",
+        caseManagement: "",
+        medicalRecords: "",
+        urReview: "844-382-0080",
+        admitting: "",
+        caseManagementFax: "",
+        urReviewFax: "855-822-7450",
+    },
+    {
         name: "Adventist Health Specialty Bakersfield (Bakersfield Heart)",
         address: "3001 Sillect Ave Bakersfield CA 93308",
         mainline: "661-316-6000",
