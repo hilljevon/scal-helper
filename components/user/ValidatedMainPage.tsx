@@ -187,9 +187,9 @@ export function ValidatedMainPage() {
                                         name="UAName"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <Label htmlFor="patientName">UA</Label>
+                                                <Label className="text-[#336699]" htmlFor="patientName">UA</Label>
                                                 <FormControl>
-                                                    <Input id="patientName" type="" {...field} />
+                                                    <Input className="rounded-xl" id="patientName" type="" {...field} />
                                                 </FormControl>
                                             </FormItem>
                                         )}
@@ -202,9 +202,9 @@ export function ValidatedMainPage() {
                                         name="rnName"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <Label htmlFor="rnName">RN</Label>
+                                                <Label className="text-[#336699]" htmlFor="rnName">RN</Label>
                                                 <FormControl>
-                                                    <Input id="rnName" type="" placeholder="" {...field} />
+                                                    <Input className="rounded-xl" id="rnName" type="" placeholder="" {...field} />
                                                 </FormControl>
                                             </FormItem>
                                         )}
@@ -217,9 +217,9 @@ export function ValidatedMainPage() {
                                         name="patientName"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <Label htmlFor="patientName">Patient Name</Label>
+                                                <Label className="text-[#336699]" htmlFor="patientName">Patient Name</Label>
                                                 <FormControl>
-                                                    <Input id="patientName" type="" {...field} />
+                                                    <Input className="rounded-xl" id="patientName" type="" {...field} />
                                                 </FormControl>
                                             </FormItem>
                                         )}
@@ -232,9 +232,9 @@ export function ValidatedMainPage() {
                                         name="mrn"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <Label htmlFor="mrn">MRN</Label>
+                                                <Label className="text-[#336699]" htmlFor="mrn">MRN</Label>
                                                 <FormControl>
-                                                    <Input id="mrn" type="" placeholder="" {...field} />
+                                                    <Input className="rounded-xl" id="mrn" type="" placeholder="" {...field} />
                                                 </FormControl>
                                             </FormItem>
                                         )}
@@ -247,10 +247,10 @@ export function ValidatedMainPage() {
                                         name="nkf"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>NKF</FormLabel>
+                                                <FormLabel className="text-[#009999]">NKF</FormLabel>
                                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                     <FormControl>
-                                                        <SelectTrigger>
+                                                        <SelectTrigger className="rounded-xl">
                                                             <SelectValue placeholder="Select a NKF" />
                                                         </SelectTrigger>
                                                     </FormControl>
@@ -271,10 +271,10 @@ export function ValidatedMainPage() {
                                         name="homeFacility"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Going To</FormLabel>
+                                                <FormLabel className="text-[#009999]" >Going To</FormLabel>
                                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                     <FormControl>
-                                                        <SelectTrigger>
+                                                        <SelectTrigger className="rounded-xl">
                                                             <SelectValue placeholder="Select a facility" />
                                                         </SelectTrigger>
                                                     </FormControl>
@@ -342,9 +342,9 @@ export function ValidatedMainPage() {
                                 name="engagementNote"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <fieldset className="grid gap-6 rounded-lg border p-4">
+                                        <fieldset className="grid gap-6 rounded-xl border p-4">
                                             <div className="grid gap-3">
-                                                <FormLabel htmlFor="engagementNote">
+                                                <FormLabel className="text-[#009999]" htmlFor=" engagementNote">
                                                     <div className="flex justify-between">
                                                         <div>
                                                             Engagement Note
@@ -356,9 +356,10 @@ export function ValidatedMainPage() {
                                                 </FormLabel>
                                                 <FormControl>
                                                     <Textarea
+
                                                         id="engagementNote"
                                                         placeholder="Insert Engagement Note"
-                                                        className="min-h-[14rem]"
+                                                        className="min-h-[14rem] rounded-xl"
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -377,11 +378,11 @@ export function ValidatedMainPage() {
 
                 <div className="relative  flex-col items-start gap-8 md:flex">
                     <form className="grid w-full items-start gap-6">
-                        <fieldset className="grid gap-6 rounded-lg border p-2">
+                        <fieldset className="grid gap-6 rounded-xl border border-blue-400 p-4">
                             <div className="col-span-full">
-                                <Label htmlFor="oneTouchTemplate">One Touch</Label>
-                                <div className="min-h-[24rem] min-w-[4rem] text-xs">
-                                    <div className="flex w-full rounded-md border border-neutral-200 bg-transparent px-3 py-2 shadow-sm placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300 min-h-[24rem] min-w-[4rem] text-xs">
+                                <Label className="text-blue-600" htmlFor="oneTouchTemplate">One Touch</Label>
+                                <div className="min-h-[24rem] min-w-[4rem] text-xs mt-2">
+                                    <div className="flex w-full rounded-xl border border-neutral-200 bg-transparent px-3 py-2 shadow-sm placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300 min-h-[24rem] min-w-[4rem] text-xs">
                                         {caseData && (
                                             <p className="text-base">
                                                 ** One Touch **
@@ -420,7 +421,7 @@ export function ValidatedMainPage() {
                             <div className="col-span-full">
                                 <Accordion type="single" collapsible>
                                     <AccordionItem value="item-2">
-                                        <AccordionTrigger>BUC</AccordionTrigger>
+                                        <AccordionTrigger className="text-blue-700">BUC</AccordionTrigger>
                                         <AccordionContent className="text-xs">
                                             {currentFacility?.buc}
                                         </AccordionContent>
@@ -428,7 +429,7 @@ export function ValidatedMainPage() {
                                 </Accordion>
                                 <Accordion type="single" collapsible>
                                     <AccordionItem value="item-2">
-                                        <AccordionTrigger>MOD</AccordionTrigger>
+                                        <AccordionTrigger className="text-blue-700">MOD</AccordionTrigger>
                                         <AccordionContent className="text-xs">
                                             {currentFacility?.modName}
                                         </AccordionContent>
@@ -436,7 +437,7 @@ export function ValidatedMainPage() {
                                 </Accordion>
                                 <Accordion type="single" collapsible>
                                     <AccordionItem value="item-1">
-                                        <AccordionTrigger>One Touch Process</AccordionTrigger>
+                                        <AccordionTrigger className="text-blue-700">One Touch Process</AccordionTrigger>
                                         <AccordionContent className="text-xs">
                                             <span className="font-extrabold">1. </span> Check <span className="underline text-blue-600 hover:cursor-pointer">CEDOCS </span> to make sure facility is open <br />
                                             <span className="font-extrabold">2. </span> Confirm if there are sister facilities <br />
@@ -451,7 +452,7 @@ export function ValidatedMainPage() {
                             <div className="col-span-full">
                                 <Accordion type="single" collapsible>
                                     <AccordionItem value="item-1">
-                                        <AccordionTrigger>Misrepat Template</AccordionTrigger>
+                                        <AccordionTrigger className="text-blue-700">Misrepat Template</AccordionTrigger>
                                         <AccordionContent className="text-xs">
                                             {currentFacility && (
                                                 <MisrepatTemplate generalData={generalData} caseData={caseData} currentFacility={currentFacility} />
@@ -505,11 +506,11 @@ export function ValidatedMainPage() {
                 {/* TIMEOUT HTML */}
                 <div className="relative hidden flex-col items-start gap-8 md:flex">
                     <form className="grid w-full items-start gap-6">
-                        <fieldset className="grid gap-6 rounded-lg border p-2">
+                        <fieldset className="grid gap-6 rounded-xl border border-orange-600 p-4">
                             <div className="col-span-full">
-                                <Label htmlFor="oneTouchTemplate">Timeout</Label>
+                                <Label className="text-orange-500" htmlFor="oneTouchTemplate">Timeout</Label>
                                 <div className="min-h-[24rem] min-w-[4rem] text-xs">
-                                    <div className="flex w-full rounded-md border border-neutral-200 bg-transparent px-3 py-2 shadow-sm placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300 min-h-[24rem] min-w-[4rem] text-xs">
+                                    <div className="flex w-full mt-2 border border-neutral-200 rounded-xl bg-transparent px-3 py-2 shadow-sm placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300 min-h-[24rem] min-w-[4rem] text-xs">
                                         {caseData && (
                                             <p className="text-lg">
                                                 Timeout with <span className="text-blue-600"> {generalData.rnCaseManager} </span> on
@@ -543,7 +544,7 @@ export function ValidatedMainPage() {
                             <div className="col-span-full">
                                 <Accordion type="single" collapsible>
                                     <AccordionItem value="item-1">
-                                        <AccordionTrigger>Regular Cortext</AccordionTrigger>
+                                        <AccordionTrigger className="text-orange-700">Regular Cortext</AccordionTrigger>
                                         <AccordionContent className="text-xs">
 
                                             Hello, you have an OURS Patient to review in KPHC: <br /> <br />
@@ -559,7 +560,7 @@ export function ValidatedMainPage() {
                             <div className="col-span-full">
                                 <Accordion type="single" collapsible>
                                     <AccordionItem value="item-1">
-                                        <AccordionTrigger>Regular Process</AccordionTrigger>
+                                        <AccordionTrigger className="text-orange-700">Regular Process</AccordionTrigger>
                                         <AccordionContent className="text-xs">
                                             <span className="font-extrabold">1. </span> Check <span className="underline text-blue-600 hover:cursor-pointer">CEDOCS </span> to make sure facility is open <br />
                                             <span className="font-extrabold">2. </span> Contact BUC {currentFacility?.buc} for ok to get accepting  <br />
@@ -587,7 +588,7 @@ export function ValidatedMainPage() {
                         </AccordionItem>
                     </Accordion>
                 </div> */}
-            </main>
+            </main >
         </>
     )
 }
