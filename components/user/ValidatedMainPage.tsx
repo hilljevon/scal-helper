@@ -247,7 +247,7 @@ export function ValidatedMainPage() {
                                         name="nkf"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="text-[#009999]">NKF</FormLabel>
+                                                <FormLabel className="text-[#336699]">NKF</FormLabel>
                                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                     <FormControl>
                                                         <SelectTrigger className="rounded-xl">
@@ -271,7 +271,7 @@ export function ValidatedMainPage() {
                                         name="homeFacility"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="text-[#009999]" >Going To</FormLabel>
+                                                <FormLabel className="text-[#336699]" >Going To</FormLabel>
                                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                     <FormControl>
                                                         <SelectTrigger className="rounded-xl">
@@ -344,7 +344,7 @@ export function ValidatedMainPage() {
                                     <FormItem>
                                         <fieldset className="grid gap-6 rounded-xl border p-4">
                                             <div className="grid gap-3">
-                                                <FormLabel className="text-[#009999]" htmlFor=" engagementNote">
+                                                <FormLabel className="text-[#336699]" htmlFor=" engagementNote">
                                                     <div className="flex justify-between">
                                                         <div>
                                                             Engagement Note
