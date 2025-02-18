@@ -3,22 +3,9 @@ import { Page, Text, View, Document, StyleSheet, Image, Font } from '@react-pdf/
 import { FacilityType } from '@/lib/data';
 import { pdfjs } from 'react-pdf';
 
-if (typeof Promise.withResolvers === 'undefined') {
-    if (window)
-        // @ts-expect-error This does not exist outside of polyfill which this is doing
-        window.Promise.withResolvers = function () {
-            let resolve, reject;
-            const promise = new Promise((res, rej) => {
-                resolve = res;
-                reject = rej;
-            });
-            return { promise, resolve, reject };
-        };
-}
-
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/legacy/build/pdf.worker.min.mjs',
-    import.meta.url
+    import.meta.url,
 ).toString();
 // Create styles
 const styles = StyleSheet.create({
