@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {
     DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
@@ -12,27 +13,52 @@ import {
     FormField,
     FormItem,
 } from "@/components/ui/form"
-
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from "@/components/ui/command"
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+import ReactDOM from 'react-dom';
+import { PDFViewer } from '@react-pdf/renderer';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import Image from 'next/image'
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
+
+import ClinReqPDF from './ClinReqPDF'
+import { Check, CheckIcon, ChevronsUpDown, MoveRight, PlusCircleIcon, X } from 'lucide-react'
+import { cn } from '@/lib/utils'
 const FormSchema = z.object({
     clinReqPatients: z
         .string()
 })
 // Dummy Data generated from pasting assignments to textbox
 const dummyData = 'Michael\tSmith\t03/13/1935\t00-00345931035\t35\t4\tSepsis\tPalmdale Desert Regional\t11/02/2024\nKyle\tHunter\t04/01/1968\t00-23946893\t74\t15\tAfib\tPalmdale Desert Regional\t11/01/2024\nSam\tJenkins\t02/22/1955\t00-2569421\t66\t2\tCovid-19\tPalmdale Desert Regional\t11/12/2024'
-const ClinicalRequestForm = ({ facilities }: { facilities: any[] }) => {
+interface ClinReqPatientsInterface {
+    label: string,
+    value: string,
+    name: string,
+    dob: string,
+    mrn: string,
+    nkf: string,
+    admitDate: string
+}
+const ClinicalRequestForm = ({ facilities, patients }: { facilities: any[], patients: ClinReqPatientsInterface[] }) => {
     // dialog that gets populated for clinical request preview
     const dialogContentRef = useRef<HTMLDivElement>(null);
     // determines whether we are on paste page or clincal request preview page
@@ -46,6 +72,11 @@ const ClinicalRequestForm = ({ facilities }: { facilities: any[] }) => {
     })
     // after being separated from the initial string, the separated patients are stored in this state
     const [patientClinRequests, setPatientClinRequests] = useState<any[]>([])
+    const [open, setOpen] = useState(false)
+    const [value, setValue] = useState("")
+    const [currentPatient, setCurrentPatient] = useState<ClinReqPatientsInterface | null>(null)
+    const [clinReqPatients, setClinReqPatients] = useState<ClinReqPatientsInterface[]>([])
+
     // populates the current date for clinical request autofill
     const [currentDate, setCurrentDate] = useState<string>("")
     // to prevent hydration errors, current date generated upon client component launch
@@ -86,31 +117,22 @@ const ClinicalRequestForm = ({ facilities }: { facilities: any[] }) => {
         // populate clinical request preview
         setIsPDFView(() => !isPDFView)
     }
-    // generates a new tab with print preview
-    const handlePrint = () => {
-        const content = dialogContentRef.current?.innerHTML;
-        if (content) {
-            const printWindow = window.open('', '_blank');
-            if (printWindow) {
-                printWindow.document.write(`
-          <html>
-            <head>
-              <style>
-                @media print {
-                  body { margin: 0; padding: 20px; font-family: Arial, sans-serif; }
-                  button { display: none; }
-                  /* Additional print styles */
-                }
-              </style>
-            </head>
-            <body>${content}</body>
-          </html>
-        `);
-                printWindow.document.close();
-                printWindow.print();
-            }
+    const addPatient = () => {
+        if (currentPatient) {
+            setClinReqPatients((oldPatients) => {
+                return [...oldPatients, currentPatient]
+            })
         }
-    };
+        setCurrentPatient(null)
+        setValue("")
+    }
+    const removeFromPatients = (patient: ClinReqPatientsInterface) => {
+        setClinReqPatients((prevPatients) => {
+            const patients = prevPatients.filter(pt => pt.value != patient.value)
+            return patients
+        })
+    }
+    console.log("Facility here", facilities[0])
     return (
         <>
             {isPDFView ? (
@@ -120,95 +142,105 @@ const ClinicalRequestForm = ({ facilities }: { facilities: any[] }) => {
                         <DialogTitle></DialogTitle>
                         <DialogDescription asChild>
                             <div className=''>
-                                <div className='flex justify-center items-center my-2'>
-                                    <Image src={"/images/kp_logo.webp"} width={100} height={100} alt='logo' />
-                                </div>
-                                <div className='text-xs'>
-                                    <p> Date: {currentDate}</p> <br />
-                                    <p>Hospital Name: {facilities[0].name}  </p>
-                                    <p>Fax Number: {facilities[0].urReviewFax}  </p>
-                                    <p>Attention: <span>Case Management / Utilization Management</span> </p> <br />
-                                    <p>We understand that our member may be receiving care at your facility. Please fax initial and/or concurrent clinical information to XXX. </p>
-                                    <p>We will conduct our review promptly after receiving the requested clinical information</p>
-                                    <p>A physician is always available on request if your treating physician wishes to take advantage of the opportunity to address our member's curent care needs, to provide access to our member's clinical history, and to discuss our member's care to ensure mutual understanding and agreement. Your physician may also choose to discuss our member's care and prior medical history with one of our case managers.</p> <br /> <br />
-                                    <p> Thank you for your cooperation, </p>
-                                    Case Management Department
-                                </div>
-                                <div>
-                                    {patientClinRequests && (
-                                        <div className="">
-                                            <Table>
-                                                <TableCaption></TableCaption>
-                                                <TableHeader>
-                                                    <TableRow>
-                                                        <TableHead className="w-[100px]">First</TableHead>
-                                                        <TableHead>Last</TableHead>
-                                                        <TableHead>DOB</TableHead>
-                                                        <TableHead>Admit Date</TableHead>
-                                                        <TableHead>KP MRN</TableHead>
-                                                        {/* <TableHead className="text-right">Amount</TableHead> */}
-                                                    </TableRow>
-                                                </TableHeader>
-                                                <TableBody>
-                                                    {patientClinRequests.map((patient) => (
-                                                        <TableRow key={patient.mrn}>
-                                                            <TableCell className="font-medium"> {patient.firstName} </TableCell>
-                                                            <TableCell> {patient.lastName} </TableCell>
-                                                            <TableCell>{patient.dob} </TableCell>
-                                                            <TableCell > {patient.admitDate} </TableCell>
-                                                            <TableCell className=""> {patient.mrn} </TableCell>
-                                                        </TableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                            {/* <Button onClick={() => window.print()}>Print PDF</Button> */}
-                                            <Button onClick={handlePrint}>Print PDF</Button>
-                                            <style jsx>{`
-                                    @media print {
-                                        button { display: none; }
-                                        /* Additional print styles */
-                                    }
-                                `}</style>
-                                        </div>
-                                    )}
-
-                                </div>
-                                <Button onClick={() => setIsPDFView(!isPDFView)} variant={"outline"} className=''>
-                                    Back
-                                </Button>
+                                <PDFViewer className='w-full h-[500px]'>
+                                    <ClinReqPDF clinReqPatients={clinReqPatients} facility={facilities[0]} date={currentDate} />
+                                </PDFViewer>
                             </div>
                         </DialogDescription>
                     </div>
                 </DialogHeader>
             ) : (
-                // textbox form
+                // patient populate form
                 <DialogHeader>
-                    <DialogTitle> {facilities[0].name} </DialogTitle>
+                    <DialogTitle className='text-center'> {facilities[0].name} </DialogTitle>
                     <DialogDescription asChild>
                         <div>
-                            <Form {...form}>
-                                <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-                                    <FormField
-                                        control={form.control}
-                                        name="clinReqPatients"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <Textarea {...field} className='min-h-[250px]' />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <div className='mt-4 flex justify-between'>
-                                        <Button type='submit' className=''>
-                                            Next
+                            <div className='flex mt-6 justify-between'>
+                                <Popover open={open} onOpenChange={setOpen}>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            role="combobox"
+                                            aria-expanded={open}
+                                            className="w-[300px] justify-between"
+                                        >
+                                            {value
+                                                ? patients.find((patient) => patient.value === value)?.label
+                                                : "Select patient..."}
+                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                         </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-[300px] p-0">
+                                        <Command>
+                                            <CommandInput placeholder="Search framework..." />
+                                            <CommandList>
+                                                <CommandEmpty>No patient found.</CommandEmpty>
+                                                <CommandGroup>
+                                                    {patients.map((patient) => (
+                                                        <CommandItem
+                                                            key={patient.value}
+                                                            value={patient.value}
+                                                            onSelect={(currentValue) => {
+                                                                setValue(currentValue === value ? "" : currentValue)
+                                                                setCurrentPatient(currentValue === value ? null : patient)
+                                                                setOpen(false)
+                                                            }}
+                                                        >
+                                                            <Check
+                                                                className={cn(
+                                                                    "mr-2 h-4 w-4",
+                                                                    value === patient.value ? "opacity-100" : "opacity-0"
+                                                                )}
+                                                            />
+                                                            {patient.label}
+                                                        </CommandItem>
+                                                    ))}
+                                                </CommandGroup>
+                                            </CommandList>
+                                        </Command>
+                                    </PopoverContent>
+                                </Popover>
+                                <Button className='bg-green-600 hover:bg-green-300' onClick={addPatient}>
+                                    <PlusCircleIcon />
+                                    Add
+                                </Button>
+                            </div>
+                            <div>
+                                {clinReqPatients && (
+                                    <div className="mt-4 grid grid-cols-2 gap-4">
+                                        {clinReqPatients.map((patient: ClinReqPatientsInterface) => (
+                                            <Card className='w-4/5 h-full col-span-1' key={patient.value}>
+                                                <CardHeader>
+                                                    <CardTitle> {patient.value} </CardTitle>
+                                                    <CardDescription> KP MRN: {patient.mrn} </CardDescription>
+                                                </CardHeader>
+                                                <CardContent>
+                                                </CardContent>
+                                                <CardFooter className='flex justify-center'>
+                                                    <Button onClick={() => removeFromPatients(patient)} variant="outline" size="icon">
+                                                        <X color='red' />
+                                                    </Button>
+                                                </CardFooter>
+                                            </Card>
+
+                                        ))}
                                     </div>
-                                </form>
-                            </Form>
+                                )}
+                            </div>
                         </div>
                     </DialogDescription>
+                    <DialogFooter>
+                        <Button
+                            className='bg-blue-600 hover:bg-blue-400'
+                            onClick={() => {
+                                setIsPDFView(true)
+                            }}>
+                            <MoveRight />
+                            Continue
+                        </Button>
+                    </DialogFooter>
                 </DialogHeader>
             )}
-
         </>
     )
 }

@@ -41,6 +41,8 @@ import {
 import * as React from "react"
 import { facilities } from "@/lib/data"
 import ClinicalRequestForm from "./ClinicalRequestForm"
+import * as XLSX from "xlsx";
+import { handleCaseAssignmentXls } from "@/lib/handleTransferData"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -54,6 +56,7 @@ export function DataTable<TData, TValue>({ columns, data, }: DataTableProps<TDat
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
     )
+    const [patients, setPatients] = React.useState<any[] | null>(null)
     const [rowSelection, setRowSelection] = React.useState<RowSelectionInterface | {} | any>({})
     // define facility selection later
     const [selectedFacilities, setSelectedFacilities] = React.useState<any[]>([])
@@ -74,6 +77,22 @@ export function DataTable<TData, TValue>({ columns, data, }: DataTableProps<TDat
             rowSelection,
         }
     })
+    function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const binaryData = e.target?.result;
+            if (binaryData) {
+                const workbook = XLSX.read(binaryData, { type: "binary" });
+                const ccrCaseWorksheet = workbook["Sheets"]["Details"]
+                console.log("CCR Cases here", ccrCaseWorksheet)
+                const res = handleCaseAssignmentXls(ccrCaseWorksheet)
+                setPatients(res)
+            }
+        };
+        reader.readAsBinaryString(file);
+    }
     // Everytime a row selection is picked, we update state to reflect current selected facilities since row selection only stores an index.
     React.useEffect(() => {
         if (rowSelection && Object.keys(rowSelection).length > 0) {
@@ -87,6 +106,9 @@ export function DataTable<TData, TValue>({ columns, data, }: DataTableProps<TDat
             setSelectedFacilities([])
         }
     }, [rowSelection])
+    React.useEffect(() => {
+        document.title = "Clinical Requests"
+    }, [])
     return (
         <>
             <div className="flex items-center pb-8">
@@ -98,6 +120,13 @@ export function DataTable<TData, TValue>({ columns, data, }: DataTableProps<TDat
                     }
                     className="max-w-sm"
                 />
+                <div className="flex items-center w-full justify-center">
+                    <input
+                        type="file"
+                        accept=".xlsx,.xls"
+                        onChange={handleFileUpload}
+                    />
+                </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">
@@ -173,23 +202,24 @@ export function DataTable<TData, TValue>({ columns, data, }: DataTableProps<TDat
             </div>
             <div className="flex items-center justify-between space-x-2 py-4">
                 <div className="flex-1 text-sm text-muted-foreground">
-                    {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                    {table.getFilteredRowModel().rows.length} row(s) selected.
+                    {/* {table.getFilteredSelectedRowModel().rows.length} of{" "}
+                    {table.getFilteredRowModel().rows.length} row(s) selected. */}
+
                     <Dialog>
                         <DialogTrigger asChild>
                             <Button className="ml-8" variant={"default"} size={"sm"}>
                                 Request
                             </Button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-[600px] min-h-[400px] max-h-[80vh] overflow-y-auto">
-                            {/* Conditional rendering depeding on if a facility is selected */}
-                            {Object.keys(rowSelection).length > 0 && selectedFacilities ? (
-                                <ClinicalRequestForm facilities={selectedFacilities} />
+                        <DialogContent className="min-w-[700px] min-h-[600px] max-h-[80vh] overflow-y-auto">
+                            {/* Conditional rendering depeding on if a facility is selected and if file is uploaded */}
+                            {Object.keys(rowSelection).length > 0 && selectedFacilities && patients ? (
+                                <ClinicalRequestForm facilities={selectedFacilities} patients={patients} />
                             ) : (
                                 <DialogHeader>
                                     <DialogTitle>Error</DialogTitle>
                                     <DialogDescription>
-                                        Please select a facility to continue
+                                        Please add case assignments file and select a facility.
                                     </DialogDescription>
                                 </DialogHeader>
                             )}

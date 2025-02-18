@@ -115,3 +115,61 @@ export function handleEngagementNote(caseData: CaseDataInterface) {
     }
     return engagementNoteObject
 }
+function extractRowCount(range: string): number {
+    const match = range.match(/\d+$/); // Match the last sequence of digits in the string
+    return match ? parseInt(match[0], 10) : 4;
+}
+export const handleCaseAssignmentXls = (cases: any) => {
+    const columnCheck = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    const patients = []
+    const lastCell = cases["!ref"]
+    const rowCount = extractRowCount(lastCell)
+    console.log("Row count here", rowCount)
+    let renoCol = "A"
+    let firstNameCol = "A"
+    let lastNameCol = "A"
+    let admitDateCol = "A"
+    let dateOfBirthCol = "A"
+    let kpMRNCol = "A"
+    let NKFNameCol = "A"
+    // First is checking for the column index to ensure they are linked to the appropriate header
+    for (let col of columnCheck) {
+        const columnKey = `${col}2`
+        const currentCell = cases[columnKey]["v"]
+        switch (currentCell) {
+            case "Member First Name":
+                firstNameCol = col;
+            case "Member Last Name":
+                lastNameCol = col;
+            case "DOB":
+                dateOfBirthCol = col;
+            case "MRN":
+                kpMRNCol = col;
+            case "Vendor Name":
+                NKFNameCol = col;
+            case "Admit Date":
+                admitDateCol = col
+        }
+    }
+    for (let currentRow = 3; currentRow <= rowCount; currentRow++) {
+        console.log("Current row", currentRow)
+        const firstNameKey = `${firstNameCol}${currentRow}`
+        console.log("First name", cases[firstNameKey]["v"])
+        const firstName = cases[firstNameKey]["v"]
+        const lastName = cases[`${lastNameCol}${currentRow}`]["v"]
+        const dob = cases[`${dateOfBirthCol}${currentRow}`]["w"]
+        const mrn = cases[`${kpMRNCol}${currentRow}`]["w"]
+        const nkf = cases[`${NKFNameCol}${currentRow}`]["w"]
+        const admitDate = cases[`${admitDateCol}${currentRow}`]["w"]
+        patients.push({
+            label: `${firstName} ${lastName}: ${dob}`,
+            value: `${firstName} ${lastName}: ${dob}`,
+            name: `${firstName} ${lastName}`,
+            dob: dob,
+            mrn: mrn,
+            nkf: nkf,
+            admitDate: admitDate
+        })
+    }
+    return patients
+}

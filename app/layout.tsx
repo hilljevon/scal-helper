@@ -4,6 +4,7 @@ import "./globals.css";
 import {
   Ambulance,
   CassetteTapeIcon,
+  Hospital,
   Info,
   PhoneForwardedIcon,
 } from "lucide-react"
@@ -50,7 +51,7 @@ export default function RootLayout({
           <aside className="inset-y fixed  left-0 z-20 flex h-full flex-col border-r">
             <div className="border-b p-2">
               <Button variant="outline" size="icon" aria-label="Home">
-                <CassetteTapeIcon className="size-5 fill-foreground" />
+                <Hospital className="size-5" />
               </Button>
             </div>
             <nav className="grid gap-1 p-2">
