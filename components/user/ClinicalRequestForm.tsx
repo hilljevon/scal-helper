@@ -44,24 +44,9 @@ import ClinReqPDF from './ClinReqPDF'
 import { Check, CheckIcon, ChevronsUpDown, MoveRight, PlusCircleIcon, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { PDFViewer } from '@react-pdf/renderer'
-import { pdfjs } from 'react-pdf'
-if (typeof Promise.withResolvers === 'undefined') {
-    if (window)
-        // @ts-expect-error This does not exist outside of polyfill which this is doing
-        window.Promise.withResolvers = function () {
-            let resolve, reject;
-            const promise = new Promise((res, rej) => {
-                resolve = res;
-                reject = rej;
-            });
-            return { promise, resolve, reject };
-        };
-}
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/legacy/build/pdf.worker.min.mjs',
-    import.meta.url
-).toString();
+
+
 
 const FormSchema = z.object({
     clinReqPatients: z
