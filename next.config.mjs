@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     experimental: {
-        serverComponentsExternalPackages: ['@react-pdf/renderer'],
+        serverComponentsExternalPackages: [''],
+    },
+    webpack(config, { isServer }) {
+        // Disable the `canvas` module to prevent Webpack errors
+        if (!isServer) {
+            config.resolve.alias.canvas = false;
+        }
+        return config;
     }
 };
 

@@ -1,3 +1,7 @@
+"use client"
+import { pdfjs } from "react-pdf";
+pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
 import { columns } from '@/components/user/Columns'
 import { DataTable } from '@/components/user/Data-Table'
 import { facilities } from '@/lib/data'

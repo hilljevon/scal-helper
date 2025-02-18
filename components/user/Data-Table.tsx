@@ -51,6 +51,15 @@ interface DataTableProps<TData, TValue> {
 interface RowSelectionInterface {
     string: boolean
 }
+interface ClinReqPatientsInterface {
+    label: string,
+    value: string,
+    name: string,
+    dob: string,
+    mrn: string,
+    nkf: string,
+    admitDate: string
+}
 export function DataTable<TData, TValue>({ columns, data, }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -202,9 +211,6 @@ export function DataTable<TData, TValue>({ columns, data, }: DataTableProps<TDat
             </div>
             <div className="flex items-center justify-between space-x-2 py-4">
                 <div className="flex-1 text-sm text-muted-foreground">
-                    {/* {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                    {table.getFilteredRowModel().rows.length} row(s) selected. */}
-
                     <Dialog>
                         <DialogTrigger asChild>
                             <Button className="ml-8" variant={"default"} size={"sm"}>
@@ -212,7 +218,6 @@ export function DataTable<TData, TValue>({ columns, data, }: DataTableProps<TDat
                             </Button>
                         </DialogTrigger>
                         <DialogContent className="min-w-[700px] min-h-[600px] max-h-[80vh] overflow-y-auto">
-                            {/* Conditional rendering depeding on if a facility is selected and if file is uploaded */}
                             {Object.keys(rowSelection).length > 0 && selectedFacilities && patients ? (
                                 <ClinicalRequestForm facilities={selectedFacilities} patients={patients} />
                             ) : (
