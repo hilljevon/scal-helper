@@ -124,7 +124,6 @@ export const handleCaseAssignmentXls = (cases: any) => {
     const patients = []
     const lastCell = cases["!ref"]
     const rowCount = extractRowCount(lastCell)
-    console.log("Row count here", rowCount)
     let renoCol = "A"
     let firstNameCol = "A"
     let lastNameCol = "A"
@@ -151,12 +150,10 @@ export const handleCaseAssignmentXls = (cases: any) => {
                 admitDateCol = col
         }
     }
-    for (let currentRow = 3; currentRow <= rowCount; currentRow++) {
-        console.log("Current row", currentRow)
+    for (let currentRow = 3; currentRow < rowCount; currentRow++) {
         const firstNameKey = `${firstNameCol}${currentRow}`
-        console.log("First name", cases[firstNameKey]["v"])
-        const firstName = cases[firstNameKey]["v"]
-        const lastName = cases[`${lastNameCol}${currentRow}`]["v"]
+        const firstName = cases[firstNameKey]["w"]
+        const lastName = cases[`${lastNameCol}${currentRow}`]["w"]
         const dob = cases[`${dateOfBirthCol}${currentRow}`]["w"]
         const mrn = cases[`${kpMRNCol}${currentRow}`]["w"]
         const nkf = cases[`${NKFNameCol}${currentRow}`]["w"]
