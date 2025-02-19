@@ -1365,6 +1365,12 @@ export const HomeFacilities: HomeFacilityType[] = [
         closestFacilities: ["Downey", "Los Angeles", "Ontario", "West Los Angeles", "Anaheim"]
     },
     {
+        name: "CMH",
+        buc: "805-910-9332 / 805-948-5681",
+        modName: ['Ask for Exchange Line #'],
+        closestFacilities: []
+    },
+    {
         name: "Downey",
         buc: "Call BUC",
         modName: ["Medical Consult"],
