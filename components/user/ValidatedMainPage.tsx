@@ -411,7 +411,7 @@ export function ValidatedMainPage() {
                                                 <br /> <br />
                                                 CM Name:  <span className="text-red-600">{generalData.rnCaseManager} </span> <br />
                                                 UA Name: <span className="text-red-600"> {generalData.UAName} </span><br /> <br />
-                                                If you can accept the patient, please reply "Accept". If you need additional clarifciation, the OURS Physician Advisor will call you back at your cell phone number unless you provide another number. <br />
+                                                If you can accept the patient, please reply "Accept". If you need additional clarification, the OURS Physician Advisor will call you back at your cell phone number unless you provide another number. <br />
                                                 Thank you.
                                             </p>
                                         )}
