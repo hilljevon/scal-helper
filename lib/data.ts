@@ -1184,6 +1184,17 @@ export const facilities: FacilityType[] = [
         urReviewFax: "805-981-4432",
     },
     {
+        name: "St Johns Hospital Health Center",
+        address: "2121 Santa Monica Blvd Santa Monica CA 90404",
+        mainline: "310-829-5511",
+        caseManagement: "",
+        medicalRecords: "",
+        urReview: "310-829-8113",
+        admitting: "",
+        caseManagementFax: "",
+        urReviewFax: "424-327-9931",
+    },
+    {
         name: "St Jude Medical Center",
         address: "101 E Valencia Mesa Drive Fullerton CA 92835",
         mainline: "714-992-3000",
