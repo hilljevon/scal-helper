@@ -157,7 +157,7 @@ const StabilityMainPage = () => {
                                     <Breadcrumb>
                                         <BreadcrumbList>
                                             <BreadcrumbItem>
-                                                <span className="text-yellow-700">Reminders To Confirm: </span>
+                                                <span className="text-yellow-700">Confirm with NKF CM: </span>
                                             </BreadcrumbItem>
                                             <BreadcrumbSeparator />
                                             <BreadcrumbItem className='text-blue-500'>
