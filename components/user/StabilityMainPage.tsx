@@ -21,6 +21,7 @@ import { CircleArrowLeft, CircleArrowRight } from 'lucide-react'
 import TransferCard1 from './TransferCards/TransferCard1'
 import TransferCard2 from './TransferCards/TransferCard2'
 import TransferCard3 from './TransferCards/TransferCard3'
+import TransferCard4 from './TransferCards/TransferCard4'
 const steps = [
     "NKF CM Info",
     "Bed Info",
@@ -66,6 +67,14 @@ interface PatientInfoInterface {
     ht: string,
     wt: string
 }
+interface VitalsInterface {
+    hr: number | undefined,
+    bp: number | undefined,
+    rr: string | undefined,
+    pain: string | undefined,
+    temp: number | undefined,
+    o2: string | undefined
+}
 const StabilityMainPage = () => {
     const [nkfCMName, setNkfCmName] = useState<string>("")
     // NKF CM Phone state. Currently separated due to phone number parsing function. See TransferCard1 function
@@ -90,6 +99,14 @@ const StabilityMainPage = () => {
         codeStatus: "",
         ht: "",
         wt: ""
+    })
+    const [vitals, setVitals] = useState<VitalsInterface>({
+        hr: undefined,
+        bp: undefined,
+        rr: undefined,
+        pain: undefined,
+        temp: undefined,
+        o2: undefined
     })
     // Our questionaire stack. Used to render breadcrumbs to backtrack. ** CAN ALSO CONSIDER JUST CREATING A BACK BUTTON
     const [allSteps, setAllSteps] = useState<any[]>([steps[0]])
@@ -172,8 +189,7 @@ const StabilityMainPage = () => {
                     ) : (allSteps.length == 3) ? (
                         <TransferCard3 allSteps={allSteps} patientInfo={patientInfo} setPatientInfo={setPatientInfo} />
                     ) : (
-                        <>
-                        </>
+                        <TransferCard4 vitals={vitals} setVitals={setVitals} allSteps={allSteps} />
                     )}
                     <CardFooter className='flex justify-center items-center gap-4'>
                         <CircleArrowLeft

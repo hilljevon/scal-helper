@@ -18,37 +18,34 @@ import {
 import { CircleArrowRight } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-interface PatientInfoInterface {
-    transferDx: string,
-    covidStatus: string,
-    testDate: string,
-    sitterRestraints: string,
-    iso: string,
-    isoSpecify: string,
-    codeStatus: string,
-    ht: string,
-    wt: string
+interface VitalsInterface {
+    hr: number | undefined,
+    bp: number | undefined,
+    rr: string | undefined,
+    pain: string | undefined,
+    temp: number | undefined,
+    o2: string | undefined
 }
-const TransferCard3 = ({ allSteps, patientInfo, setPatientInfo }: { allSteps: string[], patientInfo: PatientInfoInterface, setPatientInfo: any }) => {
+const TransferCard4 = ({ allSteps, vitals, setVitals }: { allSteps: string[], vitals: VitalsInterface, setVitals: any }) => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
         const val = e.target.value;
-        setPatientInfo((prevInfo: any) => {
+        setVitals((prevInfo: any) => {
             const newInfo = { ...prevInfo, [name]: val }
             return newInfo
         })
     }
     return (
         <>
-            <CardHeader className='grid grid-cols-3'>
+            <CardHeader className='grid grid-cols-4'>
                 <div className="col-span-1">
                     <CardTitle>
                         Questionaire
                     </CardTitle>
                 </div>
-                <Breadcrumb className='col-span-1'>
+                <Breadcrumb className='col-span-2'>
                     {allSteps.length > 1 && (
-                        <BreadcrumbList className='text-xs'>
+                        <BreadcrumbList className='text-xs flex flex-row mx-auto justify-center'>
                             {allSteps.map((step: any) => (
                                 <BreadcrumbItem key={step} className='border p-1 border-blue-400 rounded-xl font-bold hover:bg-blue-500 hover:text-white hover:cursor-pointer'>
                                     <BreadcrumbLink className='hover:cursor-pointer hover:text-white' >
@@ -62,85 +59,57 @@ const TransferCard3 = ({ allSteps, patientInfo, setPatientInfo }: { allSteps: st
             </CardHeader>
             <CardContent className="grid grid-cols-4 gap-8">
                 <div className="col-span-1 grid gap-2">
-                    <Label>Transfer Dx</Label>
+                    <Label>HR</Label>
                     <Input
-                        name='transferDx'
-                        value={patientInfo.transferDx}
+                        name='hr'
                         type='text'
+                        value={vitals.hr}
                         onChange={handleInputChange}
-                        placeholder=""
                     />
                 </div>
                 <div className="col-span-1 grid gap-2">
-                    <Label>Covid Status</Label>
+                    <Label>BP</Label>
                     <Input
-                        name='covidStatus'
-                        value={patientInfo.covidStatus}
-                        onChange={handleInputChange}
+                        name='bp'
                         type='text'
+                        value={vitals.bp}
+                        onChange={handleInputChange}
                     />
                 </div>
                 <div className="col-span-1 grid gap-2">
-                    <Label>Test Date</Label>
+                    <Label>RR</Label>
                     <Input
-                        name='curretestDatentRoom'
-                        value={patientInfo.testDate}
-                        onChange={handleInputChange}
+                        name='rr'
                         type='text'
+                        value={vitals.rr}
+                        onChange={handleInputChange}
                     />
                 </div>
                 <div className="col-span-1 grid gap-2">
-                    <Label>Sitter/Restraints</Label>
+                    <Label>Pain</Label>
                     <Input
-                        name='sitterRestraints'
-                        value={patientInfo.sitterRestraints}
-                        onChange={handleInputChange}
+                        name='pain'
                         type='text'
+                        value={vitals.pain}
+                        onChange={handleInputChange}
                     />
                 </div>
                 <div className="col-span-1 grid gap-2">
-                    <Label>Iso</Label>
+                    <Label>Temp</Label>
                     <Input
-                        name='iso'
-                        value={patientInfo.iso}
-                        onChange={handleInputChange}
+                        name='temp'
                         type='text'
+                        value={vitals.temp}
+                        onChange={handleInputChange}
                     />
                 </div>
                 <div className="col-span-1 grid gap-2">
-                    <Label>Iso Specify: </Label>
+                    <Label>O2</Label>
                     <Input
-                        name='isoSpecify'
-                        value={patientInfo.isoSpecify}
-                        onChange={handleInputChange}
+                        name='o2'
                         type='text'
-                    />
-                </div>
-                <div className="col-span-1 grid gap-2">
-                    <Label>Code Status</Label>
-                    <Input
-                        name='codeStatus'
-                        value={patientInfo.codeStatus}
+                        value={vitals.o2}
                         onChange={handleInputChange}
-                        type='text'
-                    />
-                </div>
-                <div className="col-span-1 grid gap-2">
-                    <Label>Height</Label>
-                    <Input
-                        name='ht'
-                        value={patientInfo.ht}
-                        onChange={handleInputChange}
-                        type='text'
-                    />
-                </div>
-                <div className="col-span-1 grid gap-2">
-                    <Label>Weight</Label>
-                    <Input
-                        name='wt'
-                        value={patientInfo.wt}
-                        onChange={handleInputChange}
-                        type='text'
                     />
                 </div>
             </CardContent>
@@ -148,4 +117,4 @@ const TransferCard3 = ({ allSteps, patientInfo, setPatientInfo }: { allSteps: st
     )
 }
 
-export default TransferCard3
+export default TransferCard4
