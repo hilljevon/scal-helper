@@ -4,8 +4,11 @@ import "./globals.css";
 import {
   Ambulance,
   CassetteTapeIcon,
+  CircleHelp,
+  FileQuestion,
   Hospital,
   Info,
+  MessageCircleQuestion,
   PhoneForwardedIcon,
 } from "lucide-react"
 
@@ -89,6 +92,25 @@ export default function RootLayout({
                     </TooltipTrigger>
                     <TooltipContent side="right" sideOffset={5}>
                       Directory
+                    </TooltipContent>
+                  </Tooltip>
+                </Link>
+              </TooltipProvider>
+              <TooltipProvider>
+                <Link href={"/stability"}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="rounded-lg"
+                        aria-label="Models"
+                      >
+                        <MessageCircleQuestion className="size-5" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="right" sideOffset={5}>
+                      Stability
                     </TooltipContent>
                   </Tooltip>
                 </Link>
