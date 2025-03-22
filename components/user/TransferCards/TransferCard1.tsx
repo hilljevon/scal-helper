@@ -18,8 +18,13 @@ import {
 import { CircleArrowRight } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-
-const TransferCard1 = ({ nkfCMName, nkfCMPhone, setNkfCMPhone, allSteps, setNkfCmName }: { nkfCMName: any, setNkfCmName: any, nkfCMPhone: any, setNkfCMPhone: any, allSteps: any }) => {
+interface GeneralInfoInterface {
+    patientName: string,
+    patientMRN: number | undefined,
+    nkfCMName: string,
+    nkfCMPhone: string
+}
+const TransferCard1 = ({ allSteps, generalInfo, setGeneralInfo }: { allSteps: any, generalInfo: GeneralInfoInterface, setGeneralInfo: any }) => {
     // Formats NKF CM phone number in (XXX) XXX-XXXX 
     const formatPhoneNumber = (value: string) => {
         // Remove all non-numeric characters
@@ -31,11 +36,20 @@ const TransferCard1 = ({ nkfCMName, nkfCMPhone, setNkfCMPhone, allSteps, setNkfC
     };
     // Handles input change.
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.name == "nkfCMName") {
-            setNkfCmName(e.target.value)
+        const name = e.target.name;
+        const val = e.target.value;
+        if (name == "nkfCMPhone") {
+            const formattedPhoneNumber = formatPhoneNumber(val);
+            setGeneralInfo((prevInfo: any) => {
+                const newInfo = { ...prevInfo, [name]: formattedPhoneNumber }
+                return newInfo
+            })
             // If we are dealing with phone number, additional text parse function needs to be called first.
         } else {
-            setNkfCMPhone(formatPhoneNumber(e.target.value));
+            setGeneralInfo((prevInfo: any) => {
+                const newInfo = { ...prevInfo, [name]: val }
+                return newInfo
+            })
         }
     };
 
@@ -62,23 +76,43 @@ const TransferCard1 = ({ nkfCMName, nkfCMPhone, setNkfCMPhone, allSteps, setNkfC
                     )}
                 </Breadcrumb>
             </CardHeader>
-            <CardContent className="flex justify-around">
-                <div className=" col-start-2 col-span-1">
-                    <Label>NKF CM Name</Label>
+            <CardContent className="grid grid-cols-2 gap-8">
+                <div className="col-span-1 grid gap-2">
+                    <Label>Patient Name</Label>
                     <Input
                         type='text'
-                        name='nkfCMName'
-                        value={nkfCMName}
+                        name='patientName'
+                        value={generalInfo.patientName}
                         onChange={handleInputChange}
                         placeholder=""
                     />
                 </div>
-                <div className="col-start-4 col-span-1">
+                <div className="col-span-1 grid gap-2">
+                    <Label>Patient MRN</Label>
+                    <Input
+                        type='text'
+                        name='patientMRN'
+                        value={generalInfo.patientMRN}
+                        onChange={handleInputChange}
+                        placeholder=""
+                    />
+                </div>
+                <div className="col-span-1 grid gap-2">
+                    <Label>NKF CM Name</Label>
+                    <Input
+                        type='text'
+                        name='nkfCMName'
+                        value={generalInfo.nkfCMName}
+                        onChange={handleInputChange}
+                        placeholder=""
+                    />
+                </div>
+                <div className="col-span-1 grid gap-2">
                     <Label>NKF CM Phone</Label>
                     <Input
                         type='text'
                         name='nkfCMPhone'
-                        value={nkfCMPhone}
+                        value={generalInfo.nkfCMPhone}
                         onChange={handleInputChange}
                         maxLength={14}
                         placeholder="(123)456-7890"

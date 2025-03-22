@@ -20,7 +20,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 interface VitalsInterface {
     hr: number | undefined,
-    bp: number | undefined,
+    bp: string | undefined,
     rr: string | undefined,
     pain: string | undefined,
     temp: number | undefined,
